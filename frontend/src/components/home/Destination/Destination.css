@@ -1,0 +1,30 @@
+.exotics {
+    border: 1px solid white;
+    width: 350px;
+    height: 450px;
+    overflow: hidden;
+}
+
+.heart {
+    font-size: 1.5em;
+    color: maroon;
+}
+
+.destTitle {
+    text-align: center;
+    color: white;
+}
+
+.destImage {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    border: 2px solid black;
+    background: white;
+    padding: 10px;
+}
+
+.destImage:hover {
+    background: rgb(64, 139, 224);
+    cursor: pointer;
+}
