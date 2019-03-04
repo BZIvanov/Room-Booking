@@ -1,0 +1,8 @@
+.Header {
+    border: 1px solid black;
+    background-color: rgba(10, 10, 10, 0.5);
+}
+
+.list li {
+    list-style-type: none;
+}
