@@ -3,6 +3,13 @@
     background-color: rgba(10, 10, 10, 0.5);
 }
 
+.list {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
 .list li {
     list-style-type: none;
 }
+
