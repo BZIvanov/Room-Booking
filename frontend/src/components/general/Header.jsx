@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import './Header.css';
 
@@ -9,10 +9,22 @@ class Header extends React.Component {
             <nav className="Header">
                 <ul className="list">
                     <li>
-                        <NavLink to="/">
-                            <img src={ require('../../images/travel.png')} alt="travel logo" height="70" width="70" />
+                        <Link to="/">
+                            <img src={ require('../../images/travel.png')} id="siteLogo" alt="travel logo" height="70" width="70" />
+                        </Link>
+                    </li>
+                    <li >
+                        <NavLink to="/login">
+                            Login
                         </NavLink>
                     </li>
+                    <li >
+                        <NavLink to="/register">
+                            Register
+                        </NavLink>
+                    </li>
+            
+                    
                 </ul>
             </nav>
         )
