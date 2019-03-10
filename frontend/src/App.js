@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Header from './components/general/Header';
 import Footer from './components/general/Footer';
@@ -7,34 +9,86 @@ import Home from './components/home/Home';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
 import UserService from './services/authentication';
-
+import DestinationsService from './services/get-destinations';
+import NotFound from './components/general/NotFound';
 import './App.css';
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentUser: null
+            token: null,
+            username: null,
+            isAdmin: false,
+            destinations: []
         }
 
         this.handleUser = this.handleUser.bind(this);
+        this.logoutUser = this.logoutUser.bind(this);
     }
 
     handleUser(userData) {
         let requestType = userData.username ? 'signup' : 'login';
-        console.log(requestType);
+        
         const userService = new UserService();
         userService.processLogRequest(requestType, userData)
             .then(response => {
                 if (!response.success) {
-                    console.log(response)
+                    toast.error(response.message);
                 } else {
-                    // TODO: set to localStorage
-                    console.log(response)
+                    if (requestType === "login") {
+                        toast.success(response.message);
+                        window.localStorage.setItem('token', response.token);
+                        window.localStorage.setItem('username', response.user.username);
+                        window.localStorage.setItem('isAdmin', response.user.roles);
+                        this.setState({
+                            token: response.token,
+                            username: response.user.username,
+                            isAdmin: response.user.roles
+                        });
+                    } else {
+                        console.log(response);
+                        userData.username = null;
+                        this.handleUser(userData);
+                    }
                 }
             }).catch((err) => {
-                console.log(err);
+                toast.error(err);
             });
+    }
+
+    logoutUser(event) {
+        event.preventDefault();
+
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("username");
+        sessionStorage.removeItem("isAdmin");
+
+        toast.success("Logged out successfully");
+
+        this.setState({
+            token: null,
+            username: null,
+            isAdmin: false
+        });
+    }
+
+    componentWillMount() {
+        const token = window.localStorage.getItem('token');
+        
+        if (token) {
+            this.setState({
+                token: localStorage.getItem("token"),
+                username: localStorage.getItem("username"),
+                isAdmin: !!localStorage.getItem("isAdmin")
+            });
+        } else {
+            this.setState({
+                token: null,
+                username: null,
+                isAdmin: false
+            });
+        }
     }
 
     render() {
@@ -42,13 +96,16 @@ class App extends Component {
             <div className="App">
                 <BrowserRouter>
                     <Fragment>
-                        <Header />
+                        <ToastContainer />
+
+                        <Header username={this.state.username} isAdmin={this.state.isAdmin} logoutUser={this.logoutUser} />
 
                         <Switch>
-                            <Route path="/" exact component={Home} />
+                            <Route path="/" exact render={() => <Home username={this.state.username} destinations={this.state.destinations} />} />
                             <Route path="/destination/:id" component={Home} />
                             <Route path="/login" render={() => <Login handleUser={this.handleUser} />} />
                             <Route path="/register" render={() => <Register handleUser={this.handleUser} />} />
+                            <Route component={NotFound} />
                         </Switch>
 
                         <Footer/>
@@ -58,12 +115,15 @@ class App extends Component {
         );
     }
 
-    componentWillMount() {
-        const localUser = localStorage.getItem('currentUser');
-        if (localUser) {
+    async componentDidMount() {
+        try {
+            const destinations = await new DestinationsService().getAllDestinations();
+            toast.success("Destinations loaded successfully!");
             this.setState({
-                currentUser: localUser
-            });
+                destinations
+            })
+        } catch (error) {
+            toast.error(error);
         }
     }
 }

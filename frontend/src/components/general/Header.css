@@ -13,3 +13,18 @@
     list-style-type: none;
 }
 
+.list li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.3em;
+}
+
+.list li a.selected {
+    background-color: chartreuse;
+}
+
+.profileLink {
+    border: 1px solid white;
+    padding: 3px 5px;
+    border-radius: 5px;
+}
