@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 import './Register.css';
 
 class Register extends React.Component {
@@ -21,11 +22,11 @@ class Register extends React.Component {
     }
 
     render() {
-        return (
-            <React.Fragment>            
+        return (        
                <form className="Register" onSubmit={(event) => {
                    event.preventDefault();
                    this.props.handleUser(this.state);
+                   
                }} >
                     
                     <div className="container">
@@ -49,7 +50,7 @@ class Register extends React.Component {
                         </div>
                     </div>
                 </form>
-            </React.Fragment>)
+            )
     }
 }
 
