@@ -14,12 +14,17 @@ class Header extends React.Component {
                     {
                         this.props.username ?
                         (<Fragment>
+                            {
+                                this.props.isAdmin ?
+                                <li><NavLink to="/create">Add Destination</NavLink></li> :
+                                null
+                            }
                             <li ><Link to="/profile" className="profileLink" >Hello {this.props.username}!</Link></li>
                             <li ><Link to="#" onClick={this.props.logoutUser} >Logout</Link></li>
                         </Fragment>) :
                         (<Fragment>
-                            <li ><NavLink to="/login" activeClassName="selected">Login</NavLink></li>
-                            <li ><NavLink to="/register" activeClassName="selected">Register</NavLink></li>
+                            <li ><NavLink to="/user/login" activeClassName="selected">Login</NavLink></li>
+                            <li ><NavLink to="/user/register" activeClassName="selected">Register</NavLink></li>
                         </Fragment>)
                     }
                     
