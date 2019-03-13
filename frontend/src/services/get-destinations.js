@@ -1,13 +1,16 @@
-import { get } from './crud';
+import { get, post } from './crud';
 
 class DestinationsService {
     constructor() {
         this.baseUrl = 'http://localhost:5000/destination';
-        this.allDestinationsUrl = `${this.baseUrl}/all`;
     }
 
     getAllDestinations() {
-        return get(this.allDestinationsUrl);
+        return get(`${this.baseUrl}/all`);
+    }
+
+    createNewDestination(data) {
+        return post(`${this.baseUrl}/create`, data);
     }
 }
 
