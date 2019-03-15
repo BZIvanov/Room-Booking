@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Redirect } from 'react-router-dom';
 
 import './CreateDestination.css';
 
@@ -22,11 +22,26 @@ class CreateDestination extends React.Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return (
+                <Redirect to="/" />
+            ) 
+        }
+
         return (           
             <form className="createDestination" onSubmit={(event) => {
                 event.preventDefault();
                 this.props.createDestination(this.state);
-                
+
+                if (this.state.title && this.state.title.length > 3) {
+                    if (this.state.description && this.state.description.length > 9) {
+                        if (this.state.image && this.state.image.length >= 14 && (this.state.image.startsWith('https://') || this.state.image.startsWith('http://'))) { 
+                            this.setState({
+                                redirect: true
+                            })
+                        }
+                    }
+                }
             }} >
                 
                 <div className="container">
