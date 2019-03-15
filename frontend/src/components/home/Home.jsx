@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Destination from './Destination/Destination';
+import DestinationArticle from './Destination/DestinationArticle';
 import './Home.css';
 
 class Home extends React.Component {
@@ -10,7 +10,7 @@ class Home extends React.Component {
             <div className="Destination">
                 {
                     this.props.destinations.length ? this.props.destinations.map(d => {
-                        return <Destination key={d._id} destination={d} />
+                        return <DestinationArticle key={d._id} destination={d} />
                     }) : null
                 }
             </div>

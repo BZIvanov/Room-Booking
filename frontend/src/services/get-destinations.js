@@ -9,6 +9,10 @@ class DestinationsService {
         return get(`${this.baseUrl}/all`);
     }
 
+    getCurrentDestination(id) {
+        return get(`${this.baseUrl}/specific/${id}`);
+    }
+
     createNewDestination(data) {
         return post(`${this.baseUrl}/create`, data);
     }

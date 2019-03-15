@@ -20,7 +20,7 @@ class Header extends React.Component {
                                 null
                             }
                             <li ><Link to="/profile" className="profileLink" >Hello {this.props.username}!</Link></li>
-                            <li ><Link to="#" onClick={this.props.logoutUser} >Logout</Link></li>
+                            <li ><Link to="/user/logout" onClick={this.props.logoutUser} >Logout</Link></li>
                         </Fragment>) :
                         (<Fragment>
                             <li ><NavLink to="/user/login" activeClassName="selected">Login</NavLink></li>

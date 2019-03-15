@@ -1,0 +1,39 @@
+.exotic {
+    border: 1px solid white;
+    border-radius: 10px;
+    flex: 1 0 250px;
+    height: 950px;
+    overflow: hidden;
+    margin: 10px 20px;
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.heart {
+    font-size: 1.5em;
+    color: maroon;
+}
+
+.specificTitle {
+    text-align: center;
+    color: white;
+}
+
+.specificImage {
+    width: 100%;
+    height: auto;
+    min-height: 250px;
+    box-sizing: border-box;
+    border: 2px solid black;
+    background: white;
+    padding: 10px;
+}
+
+.specificImage:hover {
+    background: rgb(64, 139, 224);
+}
+
+.descriptor {
+    color: white;
+    font-weight: 100;
+}

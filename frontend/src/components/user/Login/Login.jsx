@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 import './Login.css';
 
@@ -7,7 +8,8 @@ class Login extends React.Component {
         super(props);
         this.state = {
             email: null,
-            password: null
+            password: null,
+            isLoggedIn: false
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -19,11 +21,24 @@ class Login extends React.Component {
         })
     }
 
-    render() {
+    render() {    
+        if (this.state.isLoggedIn) {
+            return (
+                <Redirect to="/" />
+            ) 
+        }
+       
         return (           
             <form className="Login" onSubmit={(event) => {
                 event.preventDefault();
                 this.props.handleUser(this.state);
+                if (this.state.email && this.state.email.length > 3 && this.state.email.includes('@')) {
+                    if (this.state.password && this.state.password.length > 7) {
+                        this.setState({
+                            isLoggedIn: true
+                        })
+                    }
+                }
             }} >
                 
                 <div className="container">
