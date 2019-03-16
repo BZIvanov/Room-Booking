@@ -60,7 +60,7 @@ class Register extends React.Component {
                                 <label>Password</label>
                                 <input type="password" name="password" onChange={this.handleChange} placeholder="Your password" />
                         
-                                <button type="submit">Register !</button>
+                                <button type="submit">Register</button>
                             </div>
                         </div>
                     </div>

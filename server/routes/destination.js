@@ -289,7 +289,7 @@ router.post('/unlike/:id', authCheck, (req, res) => {
         .then((destination) => {
           res.status(200).json({
             success: true,
-            message: 'Destination unliked successfully.',
+            message: 'Unsubscribed successfully.',
             data: destination
           })
         })

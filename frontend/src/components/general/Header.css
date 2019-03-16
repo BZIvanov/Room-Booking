@@ -17,10 +17,13 @@
     text-decoration: none;
     color: white;
     font-size: 1.3em;
+    padding: 5px;
+    border: 1px solid transparent;
+    border-radius: 5px;
 }
 
 .list li a.selected {
-    background-color: chartreuse;
+    background-color: steelblue;
 }
 
 .profileLink {

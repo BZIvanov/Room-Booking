@@ -8,6 +8,7 @@ import Footer from './components/general/Footer';
 import Home from './components/home/Home';
 import User from './components/user/User';
 import Destination from './components/home/Destination/Destination';
+import Profile from './components/profile/Profile';
 import CreateDestination from './components/home/Destination/CreateDestination';
 import NotFound from './components/general/NotFound';
 
@@ -31,6 +32,7 @@ class App extends Component {
         this.editDestination = this.editDestination.bind(this);
         this.deleteDestination = this.deleteDestination.bind(this);
         this.visitDestination = this.visitDestination.bind(this);
+        this.unlikeDestination = this.unlikeDestination.bind(this);
     }
 
     handleUser(userData) {
@@ -188,6 +190,23 @@ class App extends Component {
             });
     }
 
+    unlikeDestination(id) {
+        const unsubscribe = new DestinationsService();
+        unsubscribe.unsubscribeCurrentDestination(id)
+            .then(response => {
+                if (!response.success) {
+                    toast.error(response.message)
+                } else {
+                    toast.success(response.message);
+                    this.getAllDestinationFromDatabase();
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+                //toast.error(err);
+            });
+    }
+
     render() {
         return (
             <div className="App">
@@ -202,6 +221,15 @@ class App extends Component {
                             <Route path="/user" render={(props) => this.state.username
                                 ? <Redirect to="/" />
                                 : <User {...props} handleUser={this.handleUser} /> 
+                            }/>
+                            <Route path="/profile" render={(props) => this.state.username
+                                ? <Profile {...props} 
+                                    destinations={this.state.destinations} 
+                                    username={this.state.username} 
+                                    isAdmin={this.state.isAdmin}
+                                    unlikeDestination={this.unlikeDestination}
+                                    />
+                                : <Redirect to="/" />
                             }/>
                             <Route path="/create" render={(props) => (this.state.isAdmin || this.state.isAdmin.length > 0)
                                 ? <CreateDestination {...props} createDestination={this.createDestination} />

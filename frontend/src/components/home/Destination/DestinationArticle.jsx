@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import './DestinationArticle.css';
 
-class Destination extends React.Component {
+class DestinationArticle extends React.Component {
     
 
     render() {
@@ -26,4 +26,4 @@ class Destination extends React.Component {
     }
 }
 
-export default Destination;
+export default DestinationArticle;
