@@ -8,6 +8,10 @@ class UserService {
     processLogRequest(ending, data) {
         return post(this.baseUrl + ending, data);
     }
+
+    logoutCurrentUser() {
+        return post(this.baseUrl + 'logout');
+    }
 }
 
 export default UserService;
