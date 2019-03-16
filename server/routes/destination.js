@@ -140,6 +140,23 @@ router.get('/all', (req, res) => {
     })
 })
 
+router.get('/specific/:id', (req, res) => {
+  const destinationId = req.params.id;
+  Destination
+    .findById(destinationId)
+    .then(destination => {
+      res.status(200).json(destination)
+    })
+    .catch((err) => {
+      console.log(err)
+      const message = 'Something went wrong :('
+      return res.status(200).json({
+        success: false,
+        message: message
+      })
+    })
+})
+
 router.post('/review/:id', authCheck, (req, res) => {
   const id = req.params.id
   const review = req.body.review
@@ -223,7 +240,7 @@ router.post('/like/:id', authCheck, (req, res) => {
         .then((destination) => {
           res.status(200).json({
             success: true,
-            message: 'Destination liked successfully.',
+            message: 'Subscribed successfully.',
             data: destination
           })
         })

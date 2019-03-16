@@ -1,0 +1,100 @@
+.editDestination {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    color:#fff;
+    line-height:1.2;
+    margin:0;
+    font-size: 16px;
+  }
+
+  .clearfix {clear:both;}
+  
+  input:focus{
+      outline: none;
+  }
+
+  h2 {
+    font-weight:300;
+    font-size:20px;
+    margin:0px;
+    text-align:center;
+    text-transform:uppercase;
+    margin-top:50px;
+    padding-bottom:15px;
+  }
+  
+  .container {
+    width:470px;
+    height:500px;
+    margin:auto;
+    display:block;
+    background-color:rgba(0,0,0,0.5);
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:50px;
+    margin-top:50px;
+  }
+  .edit-form {
+    position:relative;
+    border:2px solid rgba(255,255,255,0.2);
+    width:99%;
+    height:99%;
+    margin:auto;
+    display:block;
+    border-radius:15px;
+  }
+  .edit-form hr.to-right {
+    width: 45%;
+    position:absolute;
+    right:30px;
+    border: 0px none;
+    height: 3px;
+    background-image: linear-gradient(to left,transparent, #F9E206);
+  }
+  .edit-form hr.to-left {
+    width: 45%;
+    position:absolute;
+    left:30px;
+    border: 0px none;
+    height: 3px;
+    background-image: linear-gradient(to right,transparent, #F9E206);
+  }
+  
+  .container-edit {
+    width:60%;
+    margin:auto;
+    display:block;
+    margin-top:30px;
+  }
+  
+  label {
+    width: 100%;
+    display: inline-block;
+    padding:0px 0px 5px 5px;
+    margin-top: 20px;
+    font-size:18px;
+  }
+  input {
+    border: 0px none;
+    width: 94%;
+    border-radius: 4px;
+    height: 25px;
+    padding: 5px 3%;
+    font-size:15px;
+    font-family: inherit;
+    color:#222;
+  }
+  button {
+      width:100%;
+      background-color:rgba(74,129,51,0.4);
+      border:2px solid #6FC149;
+      color:#fff;
+      border-radius:5px;
+      height:50px;
+      text-transform:uppercase;
+      font-size:19px;
+      cursor:pointer;
+      transition:all 0.3s;
+      margin-top: 70px;
+  }
+

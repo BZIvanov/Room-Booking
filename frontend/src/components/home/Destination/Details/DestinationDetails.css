@@ -1,12 +1,16 @@
+.specific {
+    display: flex;
+    justify-content: center;
+}
+
 .exotic {
     border: 1px solid white;
     border-radius: 10px;
-    flex: 1 0 250px;
-    height: 950px;
-    overflow: hidden;
     margin: 10px 20px;
     text-align: center;
     margin-bottom: 70px;
+    max-width: 500px;
+    min-height: 650px;
 }
 
 .heart {
@@ -21,7 +25,6 @@
 
 .specificImage {
     width: 100%;
-    height: auto;
     min-height: 250px;
     box-sizing: border-box;
     border: 2px solid black;
@@ -36,4 +39,40 @@
 .descriptor {
     color: white;
     font-weight: 100;
+    margin: 25px;
+}
+
+div.controls {
+    margin: 20px;
+}
+
+div.controls > a {
+    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+    text-shadow: 0 0 5px black;
+    font-size: 1.2em;
+    margin: 0 15px;
+}
+
+.edit {
+    background-color: burlywood;
+}
+
+.delete {
+    background-color: palevioletred;
+}
+
+.visit {
+    background-color: palegreen;
+}
+
+div.controls a.info {
+    text-decoration: underline;
+    font-style: italic;
+    color: khaki;
+    text-shadow: 0 0 25px black;
+    border: none;
 }

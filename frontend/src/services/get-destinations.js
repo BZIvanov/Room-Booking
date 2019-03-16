@@ -1,4 +1,4 @@
-import { get, post } from './crud';
+import { get, post, remove } from './crud';
 
 class DestinationsService {
     constructor() {
@@ -15,6 +15,18 @@ class DestinationsService {
 
     createNewDestination(data) {
         return post(`${this.baseUrl}/create`, data);
+    }
+
+    editCurrentDestination(id, data) {
+        return post(`${this.baseUrl}/edit/${id}`, data);
+    }
+
+    deleteCurrentDestination(id) {
+        return remove(`${this.baseUrl}/delete/${id}`);
+    }
+
+    visitCurrentDestination(id) {
+        return post(`${this.baseUrl}/like/${id}`);
     }
 }
 

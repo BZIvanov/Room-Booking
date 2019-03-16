@@ -9,6 +9,7 @@ class Destination extends React.Component {
 
     render() {
         const { destination } = this.props;
+
         return (
             <article className="exotics">
                 <h1 className="destTitle">{destination.title}</h1>
@@ -16,8 +17,9 @@ class Destination extends React.Component {
                     <img className="destImage" src={destination.image} alt={destination.title} />
                 </Link>
                 <h3 className="descriptor">{destination.description}</h3>
-                <div>
-                <FontAwesomeIcon icon={faHeart} className="heart" spin  />
+                <div className="visitorLikes">
+                    <span className="count">{destination.likes.length}</span>
+                    <FontAwesomeIcon icon={faHeart} className="heart" spin  />
                 </div>
             </article>
         );

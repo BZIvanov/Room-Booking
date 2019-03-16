@@ -7,6 +7,7 @@ import Header from './components/general/Header';
 import Footer from './components/general/Footer';
 import Home from './components/home/Home';
 import User from './components/user/User';
+import Destination from './components/home/Destination/Destination';
 import CreateDestination from './components/home/Destination/CreateDestination';
 import NotFound from './components/general/NotFound';
 
@@ -27,6 +28,9 @@ class App extends Component {
         this.handleUser = this.handleUser.bind(this);
         this.logoutUser = this.logoutUser.bind(this);
         this.createDestination = this.createDestination.bind(this);
+        this.editDestination = this.editDestination.bind(this);
+        this.deleteDestination = this.deleteDestination.bind(this);
+        this.visitDestination = this.visitDestination.bind(this);
     }
 
     handleUser(userData) {
@@ -46,7 +50,7 @@ class App extends Component {
                         this.setState({
                             token: response.token,
                             username: response.user.username,
-                            isAdmin: response.user.roles
+                            isAdmin: response.user.roles[0]
                         });
                     } else {
                         toast.success(response.message);
@@ -62,17 +66,26 @@ class App extends Component {
     logoutUser(event) {
         event.preventDefault();
 
-        localStorage.removeItem("token");
-        localStorage.removeItem("username");
-        localStorage.removeItem("isAdmin");
-
-        toast.success("Logged out successfully");
-
-        this.setState({
-            token: null,
-            username: null,
-            isAdmin: false
-        });
+        const logout = new UserService();
+        logout.logoutCurrentUser()
+            .then(response => {
+                if (!response.success) {
+                    toast.error(response.message)
+                } else {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("username");
+                    localStorage.removeItem("isAdmin");
+                    toast.success(response.message);
+                    this.setState({
+                        token: null,
+                        username: null,
+                        isAdmin: false
+                    });
+                }
+            })
+            .catch((err) => {
+                toast.error(err);
+            });
     }
 
     createDestination(data) {
@@ -91,6 +104,8 @@ class App extends Component {
                 toast.error(err);
             });
     }
+
+    
 
     componentWillMount() {
         const token = window.localStorage.getItem('token');
@@ -122,6 +137,57 @@ class App extends Component {
         }
     }
 
+    editDestination(id, data) {
+        const editDestination = new DestinationsService();
+        editDestination.editCurrentDestination(id, data)
+            .then(response => {
+                if (!response.success) {
+                    toast.error(response.message)
+                } else {
+                    toast.success(response.message);
+                    this.getAllDestinationFromDatabase();
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+                //toast.error(err);
+            });
+    }
+
+    deleteDestination(id) {
+        const removeDestination = new DestinationsService();
+        removeDestination.deleteCurrentDestination(id)
+            .then(response => {
+                if (!response.success) {
+                    toast.error(response.message)
+                } else {
+                    toast.success(response.message);
+                    this.getAllDestinationFromDatabase();
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+                //toast.error(err);
+            });
+    }
+
+    visitDestination(id) {
+        const visit = new DestinationsService();
+        visit.visitCurrentDestination(id)
+            .then(response => {
+                if (!response.success) {
+                    toast.error(response.message)
+                } else {
+                    toast.success(response.message);
+                    this.getAllDestinationFromDatabase();
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+                //toast.error(err);
+            });
+    }
+
     render() {
         return (
             <div className="App">
@@ -132,14 +198,23 @@ class App extends Component {
                         <Header username={this.state.username} isAdmin={this.state.isAdmin} logoutUser={this.logoutUser} />
 
                         <Switch>
-                            <Route path="/" exact render={() => <Home username={this.state.username} destinations={this.state.destinations} />} />
-                            <Route path="/destination/:id" component={Home} />
+                            <Route path="/" exact render={() => <Home username={this.state.username}  destinations={this.state.destinations} />} />
                             <Route path="/user" render={(props) => this.state.username
                                 ? <Redirect to="/" />
                                 : <User {...props} handleUser={this.handleUser} /> 
                             }/>
-                            <Route path="/create" render={(props) => this.state.isAdmin
+                            <Route path="/create" render={(props) => (this.state.isAdmin || this.state.isAdmin.length > 0)
                                 ? <CreateDestination {...props} createDestination={this.createDestination} />
+                                : <Redirect to="/" />
+                            }/>
+                            <Route path="/destination" render={(props) => this.state.username
+                                ? <Destination {...props} 
+                                    username={this.state.username}
+                                    isAdmin={this.state.isAdmin} 
+                                    editDestination={this.editDestination} 
+                                    deleteDestination={this.deleteDestination}
+                                    visitDestination={this.visitDestination} 
+                                />
                                 : <Redirect to="/" />
                             }/>
                             <Route component={NotFound} />

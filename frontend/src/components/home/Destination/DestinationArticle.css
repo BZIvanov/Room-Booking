@@ -37,3 +37,14 @@
     color: white;
     font-weight: 100;
 }
+
+.visitorLikes {
+    display: flex;
+    justify-content: center;
+
+}
+
+.visitorLikes .count {
+    color: white;
+    padding-right: 5px;
+}
