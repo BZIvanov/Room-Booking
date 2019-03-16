@@ -28,6 +28,10 @@ class DestinationsService {
     visitCurrentDestination(id) {
         return post(`${this.baseUrl}/like/${id}`);
     }
+
+    unsubscribeCurrentDestination(id) {
+        return post(`${this.baseUrl}/unlike/${id}`);
+    }
 }
 
 export default DestinationsService;

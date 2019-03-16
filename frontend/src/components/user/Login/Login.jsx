@@ -49,12 +49,12 @@ class Login extends React.Component {
                         <div className="container-login">
             
                             <label>E-mail</label>
-                            <input type="text" name="email" onChange={this.handleChange} placeholder="Your E-mail" />
+                            <input type="text" name="email" onChange={this.handleChange} placeholder="Your e-mail" />
                 
                             <label>Password</label>
-                            <input type="password" name="password" onChange={this.handleChange} placeholder="12345  :)" />
+                            <input type="password" name="password" onChange={this.handleChange} placeholder="Your password" />
                     
-                            <button type="submit">Login !</button>
+                            <button type="submit">Login</button>
                         </div>
                     </div>
                 </div>
