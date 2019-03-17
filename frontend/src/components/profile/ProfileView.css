@@ -1,7 +1,7 @@
 .myexotic {
     border: 1px solid white;
     border-radius: 10px;
-    flex: 1 0 250px;
+    flex: 1 0 220px;
     height: 550px;
     overflow: hidden;
     margin: 10px 20px;
@@ -16,7 +16,8 @@
 .myspecificImage {
     width: 100%;
     height: auto;
-    min-height: 250px;
+    min-height: 270px;
+    max-height: 270px;
     box-sizing: border-box;
     border: 2px solid black;
     background: white;

@@ -9,16 +9,45 @@ class Login extends React.Component {
         this.state = {
             email: null,
             password: null,
-            isLoggedIn: false
+            isLoggedIn: false,
+            isDisabled: true,
+            errorEmail: "wrong",
+            errorPass: "wrong"
         }
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
-        //console.log(`${event.target.name} -> ${event.target.value}`)
-        this.setState({
-            [event.target.name]: event.target.value 
-        })
+        if (event.target.name === "email") {
+            let validEmail = (event.target.name === "email" && event.target.value.includes('@') && event.target.value.length > 3) ? false : true;
+            let buttonData = true;
+            let isError = "wrong";
+
+            if (!validEmail) {
+                buttonData = false;
+                isError = "correct";
+            }
+            this.setState({
+                [event.target.name]: event.target.value,
+                isDisabled: buttonData,
+                errorEmail: isError
+            })
+        }
+        if (event.target.name === "password") {
+            let validPassword = (event.target.name === "password" && event.target.value.length > 7) ? false : true;
+            let buttonData = true;
+            let isError = "wrong";
+
+            if (!validPassword) {
+                buttonData = false;
+                isError = "correct";
+            }
+            this.setState({
+                [event.target.name]: event.target.value,
+                isDisabled: buttonData,
+                errorPass: isError
+            })
+        }
     }
 
     render() {    
@@ -49,12 +78,12 @@ class Login extends React.Component {
                         <div className="container-login">
             
                             <label>E-mail</label>
-                            <input type="text" name="email" onChange={this.handleChange} placeholder="Your e-mail" />
+                            <input type="text" name="email" className={this.state.errorEmail} onChange={this.handleChange} placeholder="Your e-mail" />
                 
                             <label>Password</label>
-                            <input type="password" name="password" onChange={this.handleChange} placeholder="Your password" />
+                            <input type="password" name="password" className={this.state.errorPass} onChange={this.handleChange} placeholder="Your password" />
                     
-                            <button type="submit">Login</button>
+                            <button type="submit"  disabled={this.state.isDisabled}>Login</button>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Header from './components/general/Header';
@@ -9,6 +10,7 @@ import Home from './components/home/Home';
 import User from './components/user/User';
 import Destination from './components/home/Destination/Destination';
 import Profile from './components/profile/Profile';
+import Buddy from './components/profile/Buddy';
 import CreateDestination from './components/home/Destination/CreateDestination';
 import NotFound from './components/general/NotFound';
 
@@ -152,7 +154,7 @@ class App extends Component {
             })
             .catch((err) => {
                 console.log(err)
-                //toast.error(err);
+                toast.error(err);
             });
     }
 
@@ -169,7 +171,7 @@ class App extends Component {
             })
             .catch((err) => {
                 console.log(err)
-                //toast.error(err);
+                toast.error(err);
             });
     }
 
@@ -186,7 +188,7 @@ class App extends Component {
             })
             .catch((err) => {
                 console.log(err)
-                //toast.error(err);
+                toast.error(err);
             });
     }
 
@@ -203,7 +205,7 @@ class App extends Component {
             })
             .catch((err) => {
                 console.log(err)
-                //toast.error(err);
+                toast.error(err);
             });
     }
 
@@ -212,7 +214,7 @@ class App extends Component {
             <div className="App">
                 <BrowserRouter>
                     <Fragment>
-                        <ToastContainer />
+                        <ToastContainer closeButton={false} autoClose={2000} transition={Flip} />
 
                         <Header username={this.state.username} isAdmin={this.state.isAdmin} logoutUser={this.logoutUser} />
 
@@ -233,6 +235,13 @@ class App extends Component {
                             }/>
                             <Route path="/create" render={(props) => (this.state.isAdmin || this.state.isAdmin.length > 0)
                                 ? <CreateDestination {...props} createDestination={this.createDestination} />
+                                : <Redirect to="/" />
+                            }/>
+                            <Route path="/buddies" render={(props) => this.state.username
+                                ? <Buddy {...props} 
+                                    travelers={this.state.destinations}
+                                    username={this.state.username}
+                                />
                                 : <Redirect to="/" />
                             }/>
                             <Route path="/destination" render={(props) => this.state.username

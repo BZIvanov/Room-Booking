@@ -15,9 +15,9 @@ class Header extends React.Component {
                         this.props.username ?
                         (<Fragment>
                             {
-                                this.props.isAdmin ?
-                                <li><NavLink to="/create">Add Destination</NavLink></li> :
-                                null
+                                this.props.isAdmin 
+                                ? <li><NavLink to="/create">Add Destination</NavLink></li>
+                                : <li><NavLink to="/buddies">Buddies</NavLink></li>
                             }
                             <li ><Link to="/profile" className="profileLink" >Hello {this.props.username}!</Link></li>
                             <li ><Link to="/user/logout" onClick={this.props.logoutUser} >Logout</Link></li>
