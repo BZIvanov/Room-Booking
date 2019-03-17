@@ -1,24 +1,19 @@
-.exotics {
+.myexotic {
     border: 1px solid white;
     border-radius: 10px;
-    flex: 1 0 250px;
+    flex: 1 0 220px;
     height: 550px;
     overflow: hidden;
     margin: 10px 20px;
     text-align: center;
 }
 
-.heart {
-    font-size: 1.5em;
-    color: maroon;
-}
-
-.destTitle {
+.mydestTitle {
     text-align: center;
     color: white;
 }
 
-.destImage {
+.myspecificImage {
     width: 100%;
     height: auto;
     min-height: 270px;
@@ -29,23 +24,28 @@
     padding: 10px;
 }
 
-.destImage:hover {
+.myspecificImage:hover {
     background: rgb(64, 139, 224);
-    cursor: pointer;
 }
 
-.descriptor {
+.mydescriptor {
     color: white;
     font-weight: 100;
 }
 
-.visitorLikes {
-    display: flex;
-    justify-content: center;
-
+.buddies {
+    text-align: center;
+    color: white;
+    font-weight: 300;
+    font-size: 1.3em;
 }
 
-.visitorLikes .count {
+.buddies li {
+    list-style-type: none;
+}
+
+.empty {
     color: white;
-    padding-right: 5px;
+    font-weight: bold;
+    font-size: 2em;
 }

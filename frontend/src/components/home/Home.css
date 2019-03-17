@@ -6,3 +6,7 @@
     justify-content: center;
 }
 
+.noData {
+    color: white;
+    font-weight: bold;
+}

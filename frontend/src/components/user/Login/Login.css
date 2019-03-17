@@ -98,3 +98,11 @@
       margin-top: 70px;
   }
 
+.wrong {
+  border: 2px solid red;
+}
+
+.correct {
+  border: 2px solid green;
+}
+
