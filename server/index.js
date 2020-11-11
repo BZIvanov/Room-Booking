@@ -1,13 +1,13 @@
-let env = process.env.NODE_ENV || 'development'
+const env = process.env.NODE_ENV || 'development';
 
-let settings = require('./config/settings')[env]
+const settings = require('./config/settings')[env];
 
-const app = require('express')()
+const app = require('express')();
 
-require('./config/database')(settings)
-require('./config/express')(app)
-require('./config/routes')(app)
-require('./config/passport')()
+require('./config/database')(settings);
+require('./config/express')(app);
+require('./config/routes')(app);
+require('./config/passport')();
 
-app.listen(settings.port)
-console.log(`Server listening on port ${settings.port}...`)
+app.listen(settings.port);
+console.log(`Server listening on port ${settings.port}...`);
