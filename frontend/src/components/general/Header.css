@@ -1,33 +1,33 @@
 .Header {
-    border: 1px solid black;
-    background-color: rgba(10, 10, 10, 0.5);
+  border: 1px solid black;
+  background-color: rgba(10, 10, 10, 0.5);
 }
 
 .list {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .list li {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .list li a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.3em;
-    padding: 5px;
-    border: 1px solid transparent;
-    border-radius: 5px;
+  text-decoration: none;
+  color: white;
+  font-size: 1.3em;
+  padding: 5px;
+  border: 1px solid transparent;
+  border-radius: 5px;
 }
 
 .list li a.selected {
-    background-color: steelblue;
+  background-color: steelblue;
 }
 
 .profileLink {
-    border: 1px solid white;
-    padding: 3px 5px;
-    border-radius: 5px;
+  border: 1px solid white;
+  padding: 3px 5px;
+  border-radius: 5px;
 }

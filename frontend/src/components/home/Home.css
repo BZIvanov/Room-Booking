@@ -1,12 +1,12 @@
 .Destination {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 50px;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+  align-items: center;
+  justify-content: center;
 }
 
 .noData {
-    color: white;
-    font-weight: bold;
+  color: white;
+  font-weight: bold;
 }
