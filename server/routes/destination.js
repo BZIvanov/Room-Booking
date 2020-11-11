@@ -82,7 +82,7 @@ router.post('/create', authCheck, (req, res) => {
         }
         return res.status(200).json({
           success: false,
-          message: message,
+          message,
         });
       });
   } else {
@@ -129,7 +129,7 @@ router.post('/edit/:id', authCheck, (req, res) => {
             }
             return res.status(200).json({
               success: false,
-              message: message,
+              message,
             });
           });
       })
@@ -138,7 +138,7 @@ router.post('/edit/:id', authCheck, (req, res) => {
         const message = 'Something went wrong :( Check the form for errors.';
         return res.status(200).json({
           success: false,
-          message: message,
+          message,
         });
       });
   } else {
@@ -166,7 +166,7 @@ router.get('/specific/:id', (req, res) => {
       const message = 'Something went wrong :(';
       return res.status(200).json({
         success: false,
-        message: message,
+        message,
       });
     });
 });
@@ -180,7 +180,7 @@ router.post('/review/:id', authCheck, (req, res) => {
     const message = 'Review must be at least 4 characters long.';
     return res.status(200).json({
       success: false,
-      message: message,
+      message,
     });
   }
 
@@ -215,7 +215,7 @@ router.post('/review/:id', authCheck, (req, res) => {
           const message = 'Something went wrong :( Check the form for errors.';
           return res.status(200).json({
             success: false,
-            message: message,
+            message,
           });
         });
     })
@@ -224,7 +224,7 @@ router.post('/review/:id', authCheck, (req, res) => {
       const message = 'Something went wrong :( Check the form for errors.';
       return res.status(200).json({
         success: false,
-        message: message,
+        message,
       });
     });
 });
@@ -238,7 +238,7 @@ router.post('/like/:id', authCheck, (req, res) => {
         const message = 'Destination not found.';
         return res.status(200).json({
           success: false,
-          message: message,
+          message,
         });
       }
 
@@ -261,7 +261,7 @@ router.post('/like/:id', authCheck, (req, res) => {
           const message = 'Something went wrong :(';
           return res.status(200).json({
             success: false,
-            message: message,
+            message,
           });
         });
     })
@@ -270,7 +270,7 @@ router.post('/like/:id', authCheck, (req, res) => {
       const message = 'Something went wrong :(';
       return res.status(200).json({
         success: false,
-        message: message,
+        message,
       });
     });
 });
@@ -281,14 +281,14 @@ router.post('/unlike/:id', authCheck, (req, res) => {
   Destination.findById(id)
     .then((destination) => {
       if (!destination) {
-        let message = 'Destination not found.';
+        const message = 'Destination not found.';
         return res.status(200).json({
           success: false,
-          message: message,
+          message,
         });
       }
 
-      let likes = destination.likes;
+      const likes = destination.likes;
       if (likes.includes(username)) {
         const index = likes.indexOf(username);
         likes.splice(index, 1);
@@ -309,7 +309,7 @@ router.post('/unlike/:id', authCheck, (req, res) => {
           const message = 'Something went wrong :(';
           return res.status(200).json({
             success: false,
-            message: message,
+            message,
           });
         });
     })
@@ -318,7 +318,7 @@ router.post('/unlike/:id', authCheck, (req, res) => {
       const message = 'Something went wrong :(';
       return res.status(200).json({
         success: false,
-        message: message,
+        message,
       });
     });
 });
