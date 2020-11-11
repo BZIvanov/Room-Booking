@@ -6,10 +6,8 @@ module.exports = (req, res, next) => {
     return res.status(401).end();
   }
 
-  // get the last part from a authorization header string like "bearer token-value"
   const token = req.headers.authorization.split(' ')[1];
 
-  // decode the token using a secret key-phrase
   return jwt.verify(token, 's0m3 r4nd0m str1ng', (err, decoded) => {
     if (err) {
       return res.status(401).end();
