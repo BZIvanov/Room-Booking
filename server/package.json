@@ -1,13 +1,10 @@
 {
-  "name": "pizza-lab-system",
+  "name": "travelling-destinations",
   "version": "0.0.1",
-  "description": "Pizza Lab",
+  "description": "Travelling Destinations",
   "main": "index.js",
-  "keywords": [
-    "pizza",
-    "system"
-  ],
-  "author": "PA",
+  "keywords": [],
+  "author": "BI",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.3",
