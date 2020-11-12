@@ -19,20 +19,21 @@ userSchema.method({
   },
 });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+module.exports = User;
 
 module.exports.seedAdminUser = () => {
   User.find({}).then((users) => {
     if (users.length > 0) return;
 
-    let salt = encryption.generateSalt();
-    let password = encryption.generateHashedPassword(salt, '12345678');
+    const salt = encryption.generateSalt();
+    const password = encryption.generateHashedPassword(salt, '12345678');
 
     User.create({
       email: 'admin@admin.com',
       username: 'Admin',
-      salt: salt,
-      password: password,
+      salt,
+      password,
       roles: ['Admin'],
     });
   });

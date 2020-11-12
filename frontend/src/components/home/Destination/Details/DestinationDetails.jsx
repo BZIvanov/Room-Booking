@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import DestinationsService from '../../../../services/get-destinations';
 import './DestinationDetails.css';
 
