@@ -1,8 +1,8 @@
 import React from 'react';
-import DestinationArticle from './Destination/DestinationArticle';
-import './Home.css';
+import DestinationArticle from '../../home/Destination/DestinationArticle';
+import './styles.css';
 
-const Home = ({ destinations }) => {
+const DestinationsList = ({ destinations }) => {
   destinations.sort((a, b) => b.likes.length - a.likes.length);
 
   return (
@@ -18,4 +18,4 @@ const Home = ({ destinations }) => {
   );
 };
 
-export default Home;
+export default DestinationsList;

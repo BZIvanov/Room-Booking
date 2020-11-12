@@ -3,15 +3,13 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Header from './components/general/Header';
-import Footer from './components/general/Footer';
-import Home from './components/home/Home';
 import User from './components/user/User';
 import Destination from './components/home/Destination/Destination';
 import Profile from './components/profile/Profile';
 import Buddy from './components/profile/Buddy';
 import CreateDestination from './components/home/Destination/CreateDestination';
-import NotFound from './components/general/NotFound';
+import { Header, DestinationsList } from './components/organisms';
+import { Footer, NotFound } from './components/atoms';
 import UserService from './services/authentication';
 import DestinationsService from './services/get-destinations';
 import './App.css';
@@ -235,7 +233,7 @@ class App extends Component {
                 path='/'
                 exact
                 render={() => (
-                  <Home
+                  <DestinationsList
                     username={this.state.username}
                     destinations={this.state.destinations}
                   />

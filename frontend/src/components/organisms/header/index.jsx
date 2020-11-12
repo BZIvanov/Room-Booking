@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import './Header.css';
-import travelLogo from '../../images/travel.png';
+import { Link, NavLink } from '../../atoms';
+import './styles.css';
+import travelLogo from '../../../images/travel.png';
 
 const Header = ({ username, isAdmin, logoutUser }) => {
   return (
