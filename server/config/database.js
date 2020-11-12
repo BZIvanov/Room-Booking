@@ -4,7 +4,11 @@ const User = require('../models/User');
 mongoose.Promise = global.Promise;
 
 module.exports = (settings) => {
-  mongoose.connect(settings.db);
+  mongoose.connect(settings.db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  });
   const db = mongoose.connection;
 
   db.once('open', (err) => {
