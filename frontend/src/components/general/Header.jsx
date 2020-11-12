@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import './Header.css';
+import travelLogo from '../../images/travel.png';
 
 const Header = ({ username, isAdmin, logoutUser }) => {
   return (
@@ -9,7 +10,7 @@ const Header = ({ username, isAdmin, logoutUser }) => {
         <li>
           <Link to='/'>
             <img
-              src={require('../../images/travel.png')}
+              src={travelLogo}
               id='siteLogo'
               alt='travel logo'
               height='70'
