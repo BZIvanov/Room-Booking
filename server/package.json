@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Travelling Destinations",
   "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
   "keywords": [],
   "author": "BI",
   "license": "MIT",
@@ -18,5 +22,8 @@
     "passport-local": "1.0.0",
     "standard": "11.0.1",
     "validator": "10.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
