@@ -3,12 +3,12 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import User from './components/user/User';
 import Destination from './components/home/Destination/Destination';
 import Profile from './components/profile/Profile';
 import Buddy from './components/profile/Buddy';
 import CreateDestination from './components/home/Destination/CreateDestination';
 import { Header, DestinationsList } from './components/organisms';
+import { UserNav } from './components/molecules';
 import { Footer, NotFound } from './components/atoms';
 import UserService from './services/authentication';
 import DestinationsService from './services/get-destinations';
@@ -245,7 +245,7 @@ class App extends Component {
                   this.state.username ? (
                     <Redirect to='/' />
                   ) : (
-                    <User {...props} handleUser={this.handleUser} />
+                    <UserNav {...props} handleUser={this.handleUser} />
                   )
                 }
               />

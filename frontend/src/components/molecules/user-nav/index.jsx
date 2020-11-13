@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Register from './Register/Register';
-import Login from './Login/Login';
-import Logout from './Logout/Logout';
+import Register from '../../user/Register/Register';
+import Login from '../../user/Login/Login';
+import { Logout } from '../../atoms';
 
 const User = (props) => {
   const { path } = props.match;
