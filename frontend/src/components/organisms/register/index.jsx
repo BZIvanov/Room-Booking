@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-
-import './Register.css';
+import './styles.css';
 
 class Register extends React.Component {
   constructor(props) {

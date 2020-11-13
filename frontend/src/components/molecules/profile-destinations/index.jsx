@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './ProfileView.css';
+import { Link } from '../../atoms';
+import './styles.css';
 
 const ProfileView = ({ destination, unlikeDestination }) => {
   return (

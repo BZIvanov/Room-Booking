@@ -1,14 +1,9 @@
 import React from 'react';
-import './Buddy.css';
+import './styles.css';
 
-class Buddy extends React.Component {
+class Buddies extends React.Component {
   render() {
-    let items = [];
-
-    this.props.travelers.forEach((x) => items.push(JSON.stringify(x)));
-
-    items = items
-      .map((a) => JSON.parse(a))
+    const items = this.props.travelers
       .filter(
         (x) => x.likes.includes(this.props.username) && x.likes.length > 1
       )
@@ -22,13 +17,13 @@ class Buddy extends React.Component {
         {items.length ? (
           items.map((d) => {
             return (
-              <article className='myexotic'>
+              <article key={d.title} className='myexotic'>
                 <h1 className='mydestTitle'>{d.title}</h1>
                 <img className='myspecificImage' src={d.image} alt={d.title} />
                 <ul className='buddies'>
                   {d.likes.length
-                    ? d.likes.map((l) => {
-                        return <li>{l}</li>;
+                    ? d.likes.map((l, i) => {
+                        return <li key={l + i}>{l}</li>;
                       })
                     : null}
                 </ul>
@@ -43,4 +38,4 @@ class Buddy extends React.Component {
   }
 }
 
-export default Buddy;
+export default Buddies;
