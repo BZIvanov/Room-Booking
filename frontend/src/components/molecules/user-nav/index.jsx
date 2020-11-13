@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Register from '../../user/Register/Register';
-import Login from '../../user/Login/Login';
+import { Login, Register } from '../../organisms';
 import { Logout } from '../../atoms';
 
 const User = (props) => {

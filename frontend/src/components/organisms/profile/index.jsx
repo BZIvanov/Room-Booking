@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
-import ProfileView from './ProfileView';
-import './Profile.css';
+import { ProfileDestinations } from '../../molecules';
 
 const Profile = ({ destinations, username, isAdmin, unlikeDestination }) => {
   let myDestinations = destinations
@@ -16,7 +15,7 @@ const Profile = ({ destinations, username, isAdmin, unlikeDestination }) => {
           {myDestinations.length
             ? myDestinations.map((d) => {
                 return (
-                  <ProfileView
+                  <ProfileDestinations
                     key={d._id}
                     destination={d}
                     unlikeDestination={unlikeDestination}

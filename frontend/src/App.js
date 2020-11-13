@@ -4,10 +4,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Destination from './components/home/Destination/Destination';
-import Profile from './components/profile/Profile';
-import Buddy from './components/profile/Buddy';
 import CreateDestination from './components/home/Destination/CreateDestination';
-import { Header, DestinationsList } from './components/organisms';
+import {
+  Header,
+  DestinationsList,
+  Buddies,
+  Profile,
+} from './components/organisms';
 import { UserNav } from './components/molecules';
 import { Footer, NotFound } from './components/atoms';
 import UserService from './services/authentication';
@@ -282,7 +285,7 @@ class App extends Component {
                 path='/buddies'
                 render={(props) =>
                   this.state.username ? (
-                    <Buddy
+                    <Buddies
                       {...props}
                       travelers={this.state.destinations}
                       username={this.state.username}
