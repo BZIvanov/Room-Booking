@@ -1,4 +1,4 @@
-import { Schema, models, model } from 'mongoose';
+const { Schema, models, model } = require('mongoose');
 
 const schema = new Schema(
   {
@@ -110,4 +110,4 @@ const schema = new Schema(
 );
 
 // for Next.js we must do this check for already existing model
-export default models.Room || model('Room', schema);
+module.exports = models.Room || model('Room', schema);
