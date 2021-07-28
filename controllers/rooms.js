@@ -1,9 +1,15 @@
 import Room from '../models/room';
 import catchAsync from '../middlewares/catch-async';
 import AppError from '../utils/app-error';
+import APIFeatures from '../utils/api-features';
 
 const getAllRooms = catchAsync(async (req, res) => {
-  const rooms = await Room.find();
+  const apiFeatures = new APIFeatures(Room.find(), req.query)
+    .search()
+    .filter()
+    .pagination();
+
+  const rooms = await apiFeatures.query;
 
   res.status(200).json({
     success: true,
