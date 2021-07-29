@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import Room from './rooms/Room';
 
 const Home = () => {
-  const { rooms } = useSelector((state) => state.rooms);
+  const { rooms, error } = useSelector((state) => state.rooms);
+
+  useEffect(() => {
+    toast.error(error);
+  }, []);
 
   return (
     <section id='rooms' className='container mt-5'>
@@ -18,7 +23,7 @@ const Home = () => {
             <b>No rooms found</b>
           </div>
         ) : (
-          rooms.map((room) => <Room key={room._id} room={room} />)
+          rooms && rooms.map((room) => <Room key={room._id} room={room} />)
         )}
       </div>
     </section>
