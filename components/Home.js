@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import Room from './rooms/Room';
+import { clearErrors } from '../store/actions/rooms';
 
 const Home = () => {
   const { rooms, error } = useSelector((state) => state.rooms);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     toast.error(error);
+    dispatch(clearErrors);
   }, []);
 
   return (
