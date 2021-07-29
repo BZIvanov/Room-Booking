@@ -1,6 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
+  const { rooms } = useSelector((state) => state.rooms);
+  console.log(rooms);
+
   return (
     <section id='rooms' className='container mt-5'>
       <h2 className='mb-3 ml-2 stays-heading'>Stays in New York</h2>
@@ -12,7 +16,7 @@ const Home = () => {
         <div className='col-sm-12 col-md-6 col-lg-3 my-3'>
           <div className='card p-2'>
             <img
-              class='card-img-top mx-auto'
+              className='card-img-top mx-auto'
               src='https://a0.muscache.com/im/pictures/a8f6a489-d236-4d2d-a57b-a95d928970af.jpg?im_w=960'
             />
             <div className='card-body d-flex flex-column'>
@@ -70,7 +74,7 @@ const Home = () => {
         <div className='col-sm-12 col-md-6 col-lg-3 my-3'>
           <div className='card p-2'>
             <img
-              class='card-img-top mx-auto'
+              className='card-img-top mx-auto'
               src='https://a0.muscache.com/im/pictures/4599de32-549f-4125-8c93-ef99ce5b4cb0.jpg?im_w=720'
             />
             <div className='card-body d-flex flex-column'>
