@@ -8,22 +8,24 @@ import {
   CLEAR_ERRORS,
 } from '../constants/rooms';
 
-export const getRooms = (req) => async (dispatch) => {
-  try {
-    const { origin } = absoluteUrl(req);
+export const getRooms =
+  (req, page = 1) =>
+  async (dispatch) => {
+    try {
+      const { origin } = absoluteUrl(req);
 
-    const { data } = await axios.get(`${origin}/api/rooms`);
-    dispatch({
-      type: ALL_ROOMS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ALL_ROOMS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      const { data } = await axios.get(`${origin}/api/rooms?page=${page}`);
+      dispatch({
+        type: ALL_ROOMS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ALL_ROOMS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const getRoom = (req, id) => async (dispatch) => {
   try {

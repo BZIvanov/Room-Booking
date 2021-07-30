@@ -10,10 +10,11 @@ const getAllRooms = catchAsync(async (req, res) => {
     .pagination();
 
   const rooms = await apiFeatures.query;
+  const totalCount = await Room.countDocuments();
 
   res.status(200).json({
     success: true,
-    count: rooms.length,
+    count: totalCount,
     rooms,
   });
 });
