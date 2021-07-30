@@ -4,17 +4,21 @@ import AppError from '../utils/app-error';
 import APIFeatures from '../utils/api-features';
 
 const getAllRooms = catchAsync(async (req, res) => {
-  const apiFeatures = new APIFeatures(Room.find(), req.query)
-    .search()
-    .filter()
-    .pagination();
+  const apiFeatures = new APIFeatures(Room.find(), req.query).search().filter();
 
-  const rooms = await apiFeatures.query;
+  let rooms = await apiFeatures.query;
+  const filteredCount = rooms.length;
+
+  apiFeatures.pagination();
+  rooms = await apiFeatures.query;
+
   const totalCount = await Room.countDocuments();
 
   res.status(200).json({
     success: true,
-    count: totalCount,
+    totalCount,
+    filteredCount,
+    perPage: apiFeatures.perPage,
     rooms,
   });
 });

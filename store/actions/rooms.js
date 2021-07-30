@@ -9,12 +9,16 @@ import {
 } from '../constants/rooms';
 
 export const getRooms =
-  (req, page = 1) =>
+  (req, page = 1, location = '', guests, category) =>
   async (dispatch) => {
     try {
       const { origin } = absoluteUrl(req);
 
-      const { data } = await axios.get(`${origin}/api/rooms?page=${page}`);
+      let url = `${origin}/api/rooms?page=${page}&location=${location}`;
+      if (guests) url = url.concat(`&guestsCapacity=${guests}`);
+      if (category) url = url.concat(`&category=${category}`);
+
+      const { data } = await axios.get(url);
       dispatch({
         type: ALL_ROOMS_SUCCESS,
         payload: data,

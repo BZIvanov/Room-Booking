@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Pagination from 'react-js-pagination';
@@ -7,7 +8,9 @@ import Room from './rooms/Room';
 import { clearErrors } from '../store/actions/rooms';
 
 const Home = () => {
-  const { rooms, roomsCount, error } = useSelector((state) => state.rooms);
+  const { rooms, totalCount, filteredCount, perPage, error } = useSelector(
+    (state) => state.rooms
+  );
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -16,24 +19,33 @@ const Home = () => {
     dispatch(clearErrors);
   }, []);
 
-  let { page = 1 } = router.query;
+  let { page = 1, location } = router.query;
   page = +page;
 
   const handlePagination = (page) => {
     router.push(`?page=${page}`);
   };
 
+  let count = totalCount;
+  if (location) {
+    count = filteredCount;
+  }
+
   return (
     <>
       <section id='rooms' className='container mt-5'>
-        <h2 className='mb-3 ml-2 stays-heading'>Stays in New York</h2>
+        <h2 className='mb-3 ml-2 stays-heading'>
+          {location ? `Rooms in ${location}` : 'All rooms'}
+        </h2>
 
-        <a href='#' className='ml-2 back-to-search'>
-          <i className='fa fa-arrow-left'></i> Back to Search
-        </a>
+        <Link href='/search'>
+          <a className='ml-2 back-to-search'>
+            <i className='fa fa-arrow-left'></i> Back to Search
+          </a>
+        </Link>
         <div className='row'>
           {rooms && rooms.length === 0 ? (
-            <div className='alert alert-danger'>
+            <div className='alert alert-danger mt-5 w-100'>
               <b>No rooms found</b>
             </div>
           ) : (
@@ -42,12 +54,12 @@ const Home = () => {
         </div>
       </section>
 
-      {roomsCount > 0 && (
+      {count > perPage && (
         <div className='d-flex justify-content-center mt-5'>
           <Pagination
             activePage={page}
             itemsCountPerPage={3}
-            totalItemsCount={roomsCount}
+            totalItemsCount={totalCount}
             onChange={handlePagination}
             nextPageText='Next'
             prevPageText='Previous'
