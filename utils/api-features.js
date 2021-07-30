@@ -2,7 +2,7 @@ class APIFeatures {
   constructor(query, queryStr) {
     this.query = query;
     this.queryStr = queryStr;
-    this.perPage = 10;
+    this.perPage = 3;
   }
 
   search() {
