@@ -10,9 +10,9 @@ export const rooms = (state = { rooms: [] }, action) => {
   switch (action.type) {
     case ALL_ROOMS_SUCCESS:
       return {
-        roomsCount: action.payload.count,
-        // perPage: action.payload.perPage,
-        // filteredRoomsCount: action.payload.filteredRoomsCount,
+        totalCount: action.payload.totalCount,
+        filteredCount: action.payload.filteredCount,
+        perPage: action.payload.perPage,
         rooms: action.payload.rooms,
       };
     case ALL_ROOMS_FAIL:
