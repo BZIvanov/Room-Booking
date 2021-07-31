@@ -36,3 +36,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Cloudinary
 
 To get your credentials (for the next.config file) for using cloudinary you need to register your account and you can find you credentials in the Dashboard.
+
+## Mailtrap
+
+To use the nodemailer package you need to register Mailtrap account.
+
+After account is created go to your Project then your Inbox. From the Integrations dropdown select Node.js Nodemailer. And you will be able to see your credentials.

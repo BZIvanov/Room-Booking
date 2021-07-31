@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { Schema, models, model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
@@ -31,7 +32,7 @@ const schema = new Schema(
       default: 'user',
     },
     resetPasswordToken: String,
-    resetPasswordExpire: String,
+    resetPasswordExpire: Date,
   },
   { timestamps: true }
 );
@@ -46,6 +47,19 @@ schema.pre('save', async function (next) {
 
 schema.methods.comparePassword = async function (incomingPassword) {
   return await bcrypt.compare(incomingPassword, this.password);
+};
+
+schema.methods.getResetPasswordToken = function () {
+  const resetToken = crypto.randomBytes(20).toString('hex');
+
+  this.resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
+
+  return resetToken;
 };
 
 export default models.User || model('User', schema);

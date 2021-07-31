@@ -1,6 +1,9 @@
+import absoluteUrl from 'next-absolute-url';
 import cloudinary from 'cloudinary';
 import User from '../models/user';
 import catchAsync from '../middlewares/catch-async';
+import AppError from '../utils/app-error';
+import sendEmail from '../utils/send-email';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -78,4 +81,39 @@ const updateProfile = catchAsync(async (req, res) => {
   });
 });
 
-export { register, getMe, updateProfile };
+const forgotPassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new AppError('User not found', 404));
+  }
+
+  const resetToken = user.getResetPasswordToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  const { origin } = absoluteUrl(req);
+  const resetUrl = `${origin}/reset-password/${resetToken}`;
+
+  const text = `Open the url to reset your password\n${resetUrl}`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Password Reset',
+      text,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: `Email sent to ${user.email}`,
+    });
+  } catch (error) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+
+    return next(new AppError(error.message, 500));
+  }
+});
+
+export { register, getMe, updateProfile, forgotPassword };
