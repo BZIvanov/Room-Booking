@@ -33,4 +33,13 @@ const register = catchAsync(async (req, res) => {
   });
 });
 
-export { register };
+const getMe = catchAsync(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+export { register, getMe };
