@@ -42,4 +42,40 @@ const getMe = catchAsync(async (req, res) => {
   });
 });
 
-export { register, getMe };
+const updateProfile = catchAsync(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name;
+    user.email = req.body.email;
+  }
+
+  if (req.body.password) {
+    user.password = req.body.password;
+  }
+
+  if (req.body.avatar !== '') {
+    const imageId = user.avatar.publicId;
+
+    await cloudinary.v2.uploader.destroy(imageId);
+
+    const avatar = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: 'bookit/avatars',
+      width: '150',
+      crop: 'scale',
+    });
+
+    user.avatar = {
+      publicId: avatar.public_id,
+      url: avatar.secure_url,
+    };
+  }
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+export { register, getMe, updateProfile };
