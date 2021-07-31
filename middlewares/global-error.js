@@ -2,6 +2,7 @@ import AppError from '../utils/app-error';
 
 export default (err, req, res, next) => {
   let error = { ...err };
+  error.message = err.message;
 
   if (err.name === 'CastError') {
     const message = `Invalid ${error.path}`;
