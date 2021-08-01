@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
-import { auth, user, forgotPassword } from './users';
+import { auth, user, loadUser, forgotPassword } from './users';
 import { rooms, roomDetails } from './rooms';
 
 const reducers = combineReducers({
   auth,
   user,
+  loadUser,
   rooms,
   roomDetails,
   forgotPassword,
