@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import absoluteUrl from 'next-absolute-url';
 import cloudinary from 'cloudinary';
 import User from '../models/user';
@@ -92,7 +93,7 @@ const forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   const { origin } = absoluteUrl(req);
-  const resetUrl = `${origin}/reset-password/${resetToken}`;
+  const resetUrl = `${origin}/password/reset/${resetToken}`;
 
   const text = `Open the url to reset your password\n${resetUrl}`;
 
@@ -116,4 +117,34 @@ const forgotPassword = catchAsync(async (req, res, next) => {
   }
 });
 
-export { register, getMe, updateProfile, forgotPassword };
+const resetPassword = catchAsync(async (req, res, next) => {
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.query.token)
+    .digest('hex');
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+  if (!user) {
+    return next(new AppError('Invalid or expired token', 400));
+  }
+
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new AppError('Passwords must match', 400));
+  }
+
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: `Password updated`,
+  });
+});
+
+export { register, getMe, updateProfile, forgotPassword, resetPassword };
