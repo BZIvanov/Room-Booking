@@ -28,4 +28,26 @@ const createBooking = catchAsync(async (req, res) => {
   });
 });
 
-export { createBooking };
+const checkRoomAvailability = catchAsync(async (req, res) => {
+  let { roomId, checkInDate, checkOutDate } = req.query;
+  console.log(roomId, checkInDate, checkOutDate);
+  checkInDate = new Date(checkInDate);
+  checkOutDate = new Date(checkOutDate);
+
+  const bookings = await Booking.find({
+    room: roomId,
+    $and: [
+      { checkInDate: { $lte: checkOutDate } },
+      { checkOutDate: { $gte: checkInDate } },
+    ],
+  });
+
+  const isAvailable = bookings.length === 0;
+
+  res.status(200).json({
+    success: true,
+    isAvailable,
+  });
+});
+
+export { createBooking, checkRoomAvailability };

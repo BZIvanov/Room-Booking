@@ -6,7 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Carousel } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import { toast } from 'react-toastify';
+import { checkBooking } from '../../store/actions/bookings';
 import { clearErrors } from '../../store/actions/rooms';
+import { CHECK_BOOKING_REQUEST } from '../../store/constants/bookings';
 import RoomFeatures from './RoomFeatures';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
@@ -15,11 +17,15 @@ const RoomDetails = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [checkInDate, setCheckInDate] = useState(new Date());
-  const [checkOutDate, setCheckOutDate] = useState(new Date());
+  const [checkInDate, setCheckInDate] = useState();
+  const [checkOutDate, setCheckOutDate] = useState();
   const [daysOfStay, setDaysOfStay] = useState(0);
 
+  const { user } = useSelector((state) => state.loadUser);
   const { room, error } = useSelector((state) => state.roomDetails);
+  const { available, loading: bookingLoading } = useSelector(
+    (state) => state.checkBooking
+  );
 
   useEffect(() => {
     toast.error(error);
@@ -32,8 +38,18 @@ const RoomDetails = () => {
     setCheckInDate(start);
     setCheckOutDate(end);
 
-    const days = Math.floor((new Date(end) - new Date(start)) / 86400000) + 1;
-    setDaysOfStay(days);
+    if (checkInDate && checkOutDate) {
+      const days = Math.floor((new Date(end) - new Date(start)) / 86400000) + 1;
+      setDaysOfStay(days);
+
+      dispatch(
+        checkBooking(
+          router.query.id,
+          checkInDate.toISOString(),
+          checkOutDate.toISOString()
+        )
+      );
+    }
   };
 
   const createBooking = async () => {
@@ -116,16 +132,37 @@ const RoomDetails = () => {
                 onChange={handleDateChange}
                 startDate={checkInDate}
                 endDate={checkOutDate}
+                minDate={new Date()}
                 selectsRange
                 inline
               />
 
-              <button
-                className='btn btn-block py-3 booking-btn'
-                onClick={createBooking}
-              >
-                Pay
-              </button>
+              {available && checkOutDate && (
+                <div className='alert alert-success my-3 font-weight-bold'>
+                  Room is available to book
+                </div>
+              )}
+
+              {!available && checkOutDate && (
+                <div className='alert alert-danger my-3 font-weight-bold'>
+                  Room not available, try different dates
+                </div>
+              )}
+
+              {available && !user && (
+                <div className='alert alert-danger my-3 font-weight-bold'>
+                  Login to book a room
+                </div>
+              )}
+
+              {available && user && (
+                <button
+                  className='btn btn-block py-3 booking-btn'
+                  onClick={createBooking}
+                >
+                  Pay
+                </button>
+              )}
             </div>
           </div>
         </div>
