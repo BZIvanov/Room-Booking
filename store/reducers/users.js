@@ -9,6 +9,12 @@ import {
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_RESET,
   UPDATE_PROFILE_FAIL,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAIL,
   CLEAR_ERRORS,
 } from '../constants/users';
 
@@ -72,6 +78,39 @@ export const user = (state = {}, action) => {
         isUpdated: false,
       };
     case UPDATE_PROFILE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const forgotPassword = (state = {}, action) => {
+  switch (action.type) {
+    case FORGOT_PASSWORD_REQUEST:
+    case RESET_PASSWORD_REQUEST:
+      return {
+        loading: true,
+      };
+    case FORGOT_PASSWORD_SUCCESS:
+      return {
+        loading: false,
+        message: action.payload,
+      };
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload,
+      };
+    case FORGOT_PASSWORD_FAIL:
+    case RESET_PASSWORD_FAIL:
       return {
         loading: false,
         error: action.payload,
