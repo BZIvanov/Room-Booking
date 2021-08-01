@@ -6,7 +6,7 @@ import { loadUserAction } from '../../store/actions/users';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { user, loading } = useSelector((state) => state.auth);
+  const { user, loading } = useSelector((state) => state.loadUser);
 
   useEffect(() => {
     if (!user) {

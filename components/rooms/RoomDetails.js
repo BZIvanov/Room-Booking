@@ -1,20 +1,63 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
 import { Carousel } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
 import { toast } from 'react-toastify';
 import { clearErrors } from '../../store/actions/rooms';
 import RoomFeatures from './RoomFeatures';
+import 'react-datepicker/dist/react-datepicker.css';
+import axios from 'axios';
 
 const RoomDetails = () => {
-  const { room, error } = useSelector((state) => state.roomDetails);
+  const router = useRouter();
   const dispatch = useDispatch();
+
+  const [checkInDate, setCheckInDate] = useState(new Date());
+  const [checkOutDate, setCheckOutDate] = useState(new Date());
+  const [daysOfStay, setDaysOfStay] = useState(0);
+
+  const { room, error } = useSelector((state) => state.roomDetails);
 
   useEffect(() => {
     toast.error(error);
     dispatch(clearErrors);
   }, []);
+
+  const handleDateChange = (dates) => {
+    const [start, end] = dates;
+
+    setCheckInDate(start);
+    setCheckOutDate(end);
+
+    const days = Math.floor((new Date(end) - new Date(start)) / 86400000) + 1;
+    setDaysOfStay(days);
+  };
+
+  const createBooking = async () => {
+    const bookingData = {
+      roomId: router.query.id,
+      checkInDate,
+      checkOutDate,
+      daysOfStay,
+      amountPaid: 50,
+      paymentInfo: {
+        id: 'stripe payment id',
+        status: 'payment status',
+      },
+    };
+
+    try {
+      const config = { headers: { 'Content-Type': 'application/json' } };
+
+      const { data } = await axios.post('/api/booking', bookingData, config);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -64,7 +107,25 @@ const RoomDetails = () => {
                 <b>${room.pricePerNight}</b> / night
               </p>
 
-              <button className='btn btn-block py-3 booking-btn'>Pay</button>
+              <hr />
+
+              <p className='mt-5 mb-3'>Pick CheckIn and CheckOut dates</p>
+              <DatePicker
+                className='w-100'
+                selected={checkInDate}
+                onChange={handleDateChange}
+                startDate={checkInDate}
+                endDate={checkOutDate}
+                selectsRange
+                inline
+              />
+
+              <button
+                className='btn btn-block py-3 booking-btn'
+                onClick={createBooking}
+              >
+                Pay
+              </button>
             </div>
           </div>
         </div>
