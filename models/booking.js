@@ -1,4 +1,5 @@
 import { Schema, models, model } from 'mongoose';
+import timeZone from 'mongoose-timezone';
 
 const schema = new Schema(
   {
@@ -39,5 +40,8 @@ const schema = new Schema(
   },
   { timestamps: true }
 );
+
+// we will provide timeZone, because by default mongoose is using UTC
+schema.plugin(timeZone);
 
 module.exports = models.Booking || model('Booking', schema);
