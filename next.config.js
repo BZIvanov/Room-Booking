@@ -22,5 +22,6 @@ module.exports = {
       'pk_test_51I2GG9CE4xwH3UTcMRFW2g4KUWhBnfLZDyNS8DeiDgVydz1OHJYZZEIAZhS9zAzdRW3gsmzgOYSgvANsWDMppoCH50jfbMJvxE',
     STRIPE_API_SECRET:
       'sk_test_52I2GG9CE2xwH3UTcOJ6sLPYUBa0EujrrMkThvC7svdp1FyRuCaoVRXFCClHYflJPMgtQ4pzBzhN4pfiC6M14rEo305hDCrml',
+    STRIPE_WEBHOOK_SECRET: 'whsec_vg38rmcEIHHB5PDyaPKPwhR97FGBc4St',
   },
 };

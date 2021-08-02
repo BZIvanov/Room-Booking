@@ -48,3 +48,17 @@ After account is created go to your Project then your Inbox. From the Integratio
 Register your stripe account to get your credentials. You can find them on your dashboard.
 
 To use the stripe checkout you need to provide company or business name. If you have not created one you can do so by clicking New Business top-left on your stripe dashboard.
+
+#### Stripe webhooks
+
+To work with the webhooks download the Stripe CLI to be able to run commands from the terminal. Stripe CLI is a way to test webhooks locally, for production setup you will need to create endpoint in the webhooks section in the dashboard.
+
+To download and install the CLI follow the instructions from the documentation.
+
+Whereever (folder) you unziped the stripe.exe file, open cmd in that directory and run the below command:
+
+```bash
+stripe listen --forward-to localhost:3000/api/webhook
+```
+
+Now create new booking on the website and in the cmd you should be able to see triggered events.
