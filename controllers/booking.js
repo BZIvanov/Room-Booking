@@ -86,11 +86,36 @@ const checkRoomBookedDates = catchAsync(async (req, res) => {
 });
 
 const getMyBookings = catchAsync(async (req, res) => {
-  const bookings = await Booking.find({ user: req.user._id });
+  const bookings = await Booking.find({ user: req.user._id })
+    .populate({
+      path: 'room',
+      select: 'name pricePerNight images',
+    })
+    .populate({
+      path: 'user',
+      select: 'name email',
+    });
 
   res.status(200).json({
     success: true,
     bookings,
+  });
+});
+
+const getBooking = catchAsync(async (req, res) => {
+  const booking = await Booking.findById(req.query.id)
+    .populate({
+      path: 'room',
+      select: 'name pricePerNight images',
+    })
+    .populate({
+      path: 'user',
+      select: 'name email',
+    });
+
+  res.status(200).json({
+    success: true,
+    booking,
   });
 });
 
@@ -99,4 +124,5 @@ export {
   checkRoomAvailability,
   checkRoomBookedDates,
   getMyBookings,
+  getBooking,
 };
