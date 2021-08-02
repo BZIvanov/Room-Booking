@@ -8,6 +8,8 @@ import {
   BOOKED_DATES_FAIL,
   MY_BOOKINGS_SUCCESS,
   MY_BOOKINGS_FAIL,
+  BOOKING_SUCCESS,
+  BOOKING_FAIL,
   CLEAR_ERRORS,
 } from '../constants/bookings';
 
@@ -66,6 +68,29 @@ export const getMyBookings = (authCookie, req) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: MY_BOOKINGS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getBooking = (authCookie, req, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        cookie: authCookie,
+      },
+    };
+
+    const { origin } = absoluteUrl(req);
+    const { data } = await axios.get(`${origin}/api/bookings/${id}`, config);
+
+    dispatch({
+      type: BOOKING_SUCCESS,
+      payload: data.booking,
+    });
+  } catch (error) {
+    dispatch({
+      type: BOOKING_FAIL,
       payload: error.response.data.message,
     });
   }

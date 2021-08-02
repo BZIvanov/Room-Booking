@@ -2,8 +2,56 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { MDBDataTable } from 'mdbreact';
+import easyinvoice from 'easyinvoice';
 import { toast } from 'react-toastify';
 import { clearErrors } from '../../store/actions/bookings';
+
+const downloadInvoice = async (booking) => {
+  const data = {
+    documentTitle: 'Booking invoice',
+    locale: 'bg-BG',
+    currency: 'BGN',
+    taxNotation: 'vat',
+    marginTop: 25,
+    marginRight: 25,
+    marginLeft: 25,
+    marginBottom: 25,
+    logo: 'https://public.easyinvoice.cloud/img/logo_en_original.png',
+    background: 'https://public.easyinvoice.cloud/img/watermark-draft.jpg',
+    sender: {
+      company: 'Book it',
+      address: 'Sofia Street 123',
+      zip: '1234',
+      city: 'Sofia',
+      country: 'Bulgaria',
+    },
+    client: {
+      company: booking.user.name,
+      address: booking.user.email,
+      zip: '4567',
+      city: 'Sofia',
+      country: 'Bulgaria',
+    },
+    invoiceNumber: booking._id,
+    invoiceDate: new Date(Date.now()).toLocaleString('bg-BG'),
+    products: [
+      {
+        quantity: booking.daysOfStay,
+        description: booking.room.name,
+        tax: 0,
+        price: booking.room.pricePerNight,
+      },
+    ],
+    bottomNotice: 'Auto generated invoice.',
+    translate: {
+      price: 'Цена',
+      total: 'Всичко',
+    },
+  };
+
+  const invoiceSetup = await easyinvoice.createInvoice(data);
+  easyinvoice.download(`invoice-${booking._id}.pdf`, invoiceSetup.pdf);
+};
 
 const MyBookings = () => {
   const dispatch = useDispatch();
@@ -53,8 +101,8 @@ const MyBookings = () => {
       bookings.forEach((booking) => {
         data.rows.push({
           id: booking._id,
-          checkIn: new Date(booking.checkInDate).toLocaleDateString('en-BG'),
-          checkOut: new Date(booking.checkOutDate).toLocaleDateString('en-BG'),
+          checkIn: new Date(booking.checkInDate).toLocaleDateString('bg-BG'),
+          checkOut: new Date(booking.checkOutDate).toLocaleDateString('bg-BG'),
           amount: `${booking.amountPaid} lv.`,
           actions: (
             <>
@@ -63,7 +111,10 @@ const MyBookings = () => {
                   <i className='fa fa-eye'></i>
                 </a>
               </Link>
-              <button className='btn btn-success mx-2'>
+              <button
+                className='btn btn-success mx-2'
+                onClick={() => downloadInvoice(booking)}
+              >
                 <i className='fa fa-download'></i>
               </button>
             </>
