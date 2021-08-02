@@ -1,4 +1,5 @@
 import absoluteUrl from 'next-absolute-url';
+import getRawBody from 'raw-body';
 import Room from '../models/room';
 import User from '../models/user';
 import Booking from '../models/booking';
@@ -36,4 +37,48 @@ const stripeCheckoutSession = catchAsync(async (req, res) => {
   });
 });
 
-export { stripeCheckoutSession };
+const webhookCheckout = catchAsync(async (req, res) => {
+  console.log('here');
+  try {
+    const rawBody = await getRawBody(req);
+    const sig = req.headers['stripe-signature'];
+    console.log(sig);
+    const event = stripe.webhooks.constructEvent(
+      rawBody,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object;
+
+      const roomId = session.client_reference_id;
+      const userId = (await User.findOne({ email: session.customer_email })).id;
+      const amountPaid = session.amount_total / 100;
+      const paymentInfo = {
+        id: session.payment_intent,
+        status: session.payment_status,
+      };
+      const checkInDate = session.metadata.checkInDate;
+      const checkOutDate = session.metadata.checkOutDate;
+      const daysOfStay = session.metadata.daysOfStay;
+
+      await Booking.create({
+        room: roomId,
+        user: userId,
+        checkInDate,
+        checkOutDate,
+        daysOfStay,
+        amountPaid,
+        paymentInfo,
+        paidAt: Date.now(),
+      });
+
+      res.status(201).json({ success: true });
+    }
+  } catch (error) {
+    console.log('Stripe webhook error: ', error);
+  }
+});
+
+export { stripeCheckoutSession, webhookCheckout };
