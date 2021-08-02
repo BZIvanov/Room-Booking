@@ -8,11 +8,12 @@ import Room from './rooms/Room';
 import { clearErrors } from '../store/actions/rooms';
 
 const Home = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const { rooms, totalCount, filteredCount, perPage, error } = useSelector(
     (state) => state.rooms
   );
-  const dispatch = useDispatch();
-  const router = useRouter();
 
   useEffect(() => {
     toast.error(error);

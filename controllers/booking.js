@@ -85,4 +85,18 @@ const checkRoomBookedDates = catchAsync(async (req, res) => {
   });
 });
 
-export { createBooking, checkRoomAvailability, checkRoomBookedDates };
+const getMyBookings = catchAsync(async (req, res) => {
+  const bookings = await Booking.find({ user: req.user._id });
+
+  res.status(200).json({
+    success: true,
+    bookings,
+  });
+});
+
+export {
+  createBooking,
+  checkRoomAvailability,
+  checkRoomBookedDates,
+  getMyBookings,
+};
