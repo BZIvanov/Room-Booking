@@ -10,6 +10,7 @@ import { checkBooking, getBookedDates } from '../../store/actions/bookings';
 import { clearErrors } from '../../store/actions/rooms';
 import { CHECK_BOOKING_RESET } from '../../store/constants/bookings';
 import RoomFeatures from './RoomFeatures';
+import getStripe from '../../utils/stripe';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 
@@ -20,6 +21,7 @@ const RoomDetails = () => {
   const [checkInDate, setCheckInDate] = useState();
   const [checkOutDate, setCheckOutDate] = useState();
   const [daysOfStay, setDaysOfStay] = useState(0);
+  const [paymentLoading, setPaymentLoading] = useState(false);
 
   const { user } = useSelector((state) => state.loadUser);
   const { room, error } = useSelector((state) => state.roomDetails);
@@ -28,10 +30,36 @@ const RoomDetails = () => {
   );
   const { dates } = useSelector((state) => state.bookedDates);
 
+  const bookRoom = async (id, pricePerNight) => {
+    setPaymentLoading(true);
+
+    const amount = pricePerNight * daysOfStay;
+
+    try {
+      let url = `/api/checkout-session/${id}?`;
+      url += `checkInDate=${checkInDate.toISOString()}&`;
+      url += `checkOutDate=${checkOutDate.toISOString()}&`;
+      url += `daysOfStay=${daysOfStay}`;
+
+      const { data } = await axios.get(url, { params: { amount } });
+      const stripe = await getStripe();
+
+      stripe.redirectToCheckout({ sessionId: data.session.id });
+      setPaymentLoading(false);
+    } catch (error) {
+      setPaymentLoading(false);
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
     dispatch(getBookedDates(router.query.id));
     toast.error(error);
     dispatch(clearErrors);
+
+    return () => {
+      dispatch({ type: CHECK_BOOKING_RESET });
+    };
   }, [dispatch, router.query.id]);
 
   const handleDateChange = (dates) => {
@@ -40,16 +68,12 @@ const RoomDetails = () => {
     setCheckInDate(start);
     setCheckOutDate(end);
 
-    if (checkInDate && checkOutDate) {
+    if (start && end) {
       const days = Math.floor((new Date(end) - new Date(start)) / 86400000) + 1;
       setDaysOfStay(days);
 
       dispatch(
-        checkBooking(
-          router.query.id,
-          checkInDate.toISOString(),
-          checkOutDate.toISOString()
-        )
+        checkBooking(router.query.id, start.toISOString(), end.toISOString())
       );
     }
   };
@@ -161,9 +185,10 @@ const RoomDetails = () => {
               {available && user && (
                 <button
                   className='btn btn-block py-3 booking-btn'
-                  onClick={createBooking}
+                  onClick={() => bookRoom(room._id, room.pricePerNight)}
+                  disabled={bookingLoading || paymentLoading}
                 >
-                  Pay
+                  Pay - {daysOfStay * room.pricePerNight} lv.
                 </button>
               )}
             </div>

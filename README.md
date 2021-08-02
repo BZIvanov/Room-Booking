@@ -42,3 +42,9 @@ To get your credentials (for the next.config file) for using cloudinary you need
 To use the nodemailer package you need to register Mailtrap account.
 
 After account is created go to your Project then your Inbox. From the Integrations dropdown select Node.js Nodemailer. And you will be able to see your credentials.
+
+## Stripe
+
+Register your stripe account to get your credentials. You can find them on your dashboard.
+
+To use the stripe checkout you need to provide company or business name. If you have not created one you can do so by clicking New Business top-left on your stripe dashboard.
