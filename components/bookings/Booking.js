@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { toast } from 'react-toastify';
 import { clearErrors } from '../../store/actions/bookings';
 

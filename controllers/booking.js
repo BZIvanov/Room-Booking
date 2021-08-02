@@ -34,7 +34,7 @@ const createBooking = catchAsync(async (req, res) => {
 
 const checkRoomAvailability = catchAsync(async (req, res) => {
   let { roomId, checkInDate, checkOutDate } = req.query;
-  console.log(roomId, checkInDate, checkOutDate);
+
   checkInDate = new Date(checkInDate);
   checkOutDate = new Date(checkOutDate);
 
