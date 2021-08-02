@@ -3,6 +3,8 @@ import {
   CHECK_BOOKING_REQUEST,
   CHECK_BOOKING_SUCCESS,
   CHECK_BOOKING_FAIL,
+  BOOKED_DATES_SUCCESS,
+  BOOKED_DATES_FAIL,
   CLEAR_ERRORS,
 } from '../constants/bookings';
 
@@ -26,6 +28,22 @@ export const checkBooking =
       });
     }
   };
+
+export const getBookedDates = (id) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`/api/bookings/booked-dates?roomId=${id}`);
+
+    dispatch({
+      type: BOOKED_DATES_SUCCESS,
+      payload: data.bookedDates,
+    });
+  } catch (error) {
+    dispatch({
+      type: BOOKED_DATES_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({

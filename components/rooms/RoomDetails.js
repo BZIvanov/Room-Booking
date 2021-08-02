@@ -6,9 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Carousel } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import { toast } from 'react-toastify';
-import { checkBooking } from '../../store/actions/bookings';
+import { checkBooking, getBookedDates } from '../../store/actions/bookings';
 import { clearErrors } from '../../store/actions/rooms';
-import { CHECK_BOOKING_REQUEST } from '../../store/constants/bookings';
+import { CHECK_BOOKING_RESET } from '../../store/constants/bookings';
 import RoomFeatures from './RoomFeatures';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
@@ -26,11 +26,13 @@ const RoomDetails = () => {
   const { available, loading: bookingLoading } = useSelector(
     (state) => state.checkBooking
   );
+  const { dates } = useSelector((state) => state.bookedDates);
 
   useEffect(() => {
+    dispatch(getBookedDates(router.query.id));
     toast.error(error);
     dispatch(clearErrors);
-  }, []);
+  }, [dispatch, router.query.id]);
 
   const handleDateChange = (dates) => {
     const [start, end] = dates;
@@ -135,6 +137,7 @@ const RoomDetails = () => {
                 minDate={new Date()}
                 selectsRange
                 inline
+                excludeDates={dates.map((date) => new Date(date))}
               />
 
               {available && checkOutDate && (
