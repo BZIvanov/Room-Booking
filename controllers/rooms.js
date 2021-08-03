@@ -1,3 +1,4 @@
+import cloudinary from 'cloudinary';
 import Room from '../models/room';
 import Booking from '../models/booking';
 import catchAsync from '../middlewares/catch-async';
@@ -38,6 +39,26 @@ const getRoom = catchAsync(async (req, res, next) => {
 });
 
 const createRoom = catchAsync(async (req, res) => {
+  const images = req.body.images;
+
+  const urls = [];
+
+  for (const image of images) {
+    const img = await cloudinary.v2.uploader.upload(image, {
+      folder: 'bookit/rooms',
+      width: '150',
+      crop: 'scale',
+    });
+
+    urls.push({
+      publicId: img.public_id,
+      url: img.secure_url,
+    });
+  }
+
+  req.body.images = urls;
+  req.body.user = req.user._id;
+
   const room = await Room.create(req.body);
 
   res.status(201).json({

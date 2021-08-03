@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-
-const MAX_GUESTS = 5;
-const ROOM_TYPES = ['Kingsize', 'Single', 'Double'];
+import { MAX_GUESTS, ROOM_TYPES } from '../../constants';
 
 const Search = () => {
   const [location, setLocation] = useState('');

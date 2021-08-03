@@ -13,6 +13,10 @@ import {
   ADMIN_ROOM_REQUEST,
   ADMIN_ROOM_SUCCESS,
   ADMIN_ROOM_FAIL,
+  CREATE_ROOM_REQUEST,
+  CREATE_ROOM_SUCCESS,
+  CREATE_ROOM_RESET,
+  CREATE_ROOM_FAIL,
   CLEAR_ERRORS,
 } from '../constants/rooms';
 
@@ -57,6 +61,37 @@ export const roomDetails = (state = { room: {} }, action) => {
       };
     case ROOM_DETAILS_FAIL:
       return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const createRoom = (state = { room: {} }, action) => {
+  switch (action.type) {
+    case CREATE_ROOM_REQUEST:
+      return {
+        loading: true,
+      };
+    case CREATE_ROOM_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.success,
+        room: action.payload.room,
+      };
+    case CREATE_ROOM_RESET:
+      return {
+        success: false,
+      };
+    case CREATE_ROOM_FAIL:
+      return {
+        loading: false,
         error: action.payload,
       };
     case CLEAR_ERRORS:
