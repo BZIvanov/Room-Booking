@@ -7,8 +7,10 @@ import {
   ROOM_DETAILS_FAIL,
   CREATE_REVIEW_REQUEST,
   CREATE_REVIEW_SUCCESS,
-  CREATE_REVIEW_RESET,
   CREATE_REVIEW_FAIL,
+  ELIGIBLE_REVIEWER_REQUEST,
+  ELIGIBLE_REVIEWER_SUCCESS,
+  ELIGIBLE_REVIEWER_FAIL,
   CLEAR_ERRORS,
 } from '../constants/rooms';
 
@@ -68,6 +70,25 @@ export const createReviewAction = (reviewData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_REVIEW_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const reviewEligibleAction = (roomId) => async (dispatch) => {
+  try {
+    dispatch({ type: ELIGIBLE_REVIEWER_REQUEST });
+
+    const { data } = await axios.get(
+      `/api/reviews/eligible-reviewer?roomId=${roomId}`
+    );
+    dispatch({
+      type: ELIGIBLE_REVIEWER_SUCCESS,
+      payload: data.isEligibleReviewer,
+    });
+  } catch (error) {
+    dispatch({
+      type: ELIGIBLE_REVIEWER_FAIL,
       payload: error.response.data.message,
     });
   }

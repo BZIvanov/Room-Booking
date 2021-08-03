@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { createReviewAction, clearErrors } from '../../store/actions/rooms';
+import {
+  createReviewAction,
+  reviewEligibleAction,
+  clearErrors,
+} from '../../store/actions/rooms';
 import { CREATE_REVIEW_RESET } from '../../store/constants/rooms';
 
 const CreateReview = () => {
@@ -13,8 +17,15 @@ const CreateReview = () => {
   const [comment, setComment] = useState('');
 
   const { success, error } = useSelector((state) => state.createReview);
+  const { eligible } = useSelector((state) => state.reviewEligible);
+
+  const roomId = router.query.id;
 
   useEffect(() => {
+    if (roomId) {
+      dispatch(reviewEligibleAction(roomId));
+    }
+
     if (success) {
       toast.success('Review submitted');
       dispatch({ type: CREATE_REVIEW_RESET });
@@ -29,7 +40,7 @@ const CreateReview = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const reviewData = { rating, comment, roomId: router.query.id };
+    const reviewData = { rating, comment, roomId };
     dispatch(createReviewAction(reviewData));
   };
 
@@ -72,16 +83,18 @@ const CreateReview = () => {
 
   return (
     <>
-      <button
-        id='review_btn'
-        type='button'
-        className='btn btn-primary mt-4 mb-5'
-        data-toggle='modal'
-        data-target='#ratingModal'
-        onClick={setStarsRating}
-      >
-        Submit Your Review
-      </button>
+      {eligible && (
+        <button
+          id='review_btn'
+          type='button'
+          className='btn btn-primary mt-4 mb-5'
+          data-toggle='modal'
+          data-target='#ratingModal'
+          onClick={setStarsRating}
+        >
+          Submit Your Review
+        </button>
+      )}
 
       <div
         className='modal fade'

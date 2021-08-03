@@ -1,4 +1,5 @@
 import Room from '../models/room';
+import Booking from '../models/booking';
 import catchAsync from '../middlewares/catch-async';
 import AppError from '../utils/app-error';
 import APIFeatures from '../utils/api-features';
@@ -117,6 +118,14 @@ const createReview = catchAsync(async (req, res) => {
   res.status(200).json({ success: true });
 });
 
+const eligibleReviewer = catchAsync(async (req, res) => {
+  const { roomId } = req.query;
+  const bookings = await Booking.find({ user: req.user._id, room: roomId });
+  const isEligibleReviewer = bookings.length > 0;
+
+  res.status(200).json({ success: true, isEligibleReviewer });
+});
+
 export {
   getAllRooms,
   getRoom,
@@ -124,4 +133,5 @@ export {
   updateRoom,
   deleteRoom,
   createReview,
+  eligibleReviewer,
 };
