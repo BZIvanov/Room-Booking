@@ -29,7 +29,7 @@ const Register = () => {
     }
     if (error) {
       toast.error(error);
-      dispatch(clearErrors);
+      dispatch(clearErrors());
     }
   }, [success, error, dispatch]);
 

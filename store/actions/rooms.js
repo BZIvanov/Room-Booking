@@ -5,6 +5,10 @@ import {
   ALL_ROOMS_FAIL,
   ROOM_DETAILS_SUCCESS,
   ROOM_DETAILS_FAIL,
+  CREATE_REVIEW_REQUEST,
+  CREATE_REVIEW_SUCCESS,
+  CREATE_REVIEW_RESET,
+  CREATE_REVIEW_FAIL,
   CLEAR_ERRORS,
 } from '../constants/rooms';
 
@@ -43,6 +47,27 @@ export const getRoom = (req, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ROOM_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const createReviewAction = (reviewData) => async (dispatch) => {
+  try {
+    dispatch({ type: CREATE_REVIEW_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    const { data } = await axios.put('/api/reviews', reviewData, config);
+    dispatch({
+      type: CREATE_REVIEW_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_REVIEW_FAIL,
       payload: error.response.data.message,
     });
   }

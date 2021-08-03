@@ -11,6 +11,7 @@ import { clearErrors } from '../../store/actions/rooms';
 import { CHECK_BOOKING_RESET } from '../../store/constants/bookings';
 import RoomFeatures from './RoomFeatures';
 import getStripe from '../../utils/stripe';
+import CreateReview from '../reviews/CreateReview';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 
@@ -55,7 +56,7 @@ const RoomDetails = () => {
   useEffect(() => {
     dispatch(getBookedDates(router.query.id));
     toast.error(error);
-    dispatch(clearErrors);
+    dispatch(clearErrors());
 
     return () => {
       dispatch({ type: CHECK_BOOKING_RESET });
@@ -194,6 +195,8 @@ const RoomDetails = () => {
             </div>
           </div>
         </div>
+
+        <CreateReview />
 
         <div className='reviews w-75'>
           <h3>Reviews:</h3>
