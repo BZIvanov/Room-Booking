@@ -12,4 +12,16 @@ const isAuthenticated = catchAsync(async (req, res, next) => {
   next();
 });
 
-export { isAuthenticated };
+const authorizeRoles = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError(`User with role ${req.user.role} is not authorized`, 403)
+      );
+    }
+
+    next();
+  };
+};
+
+export { isAuthenticated, authorizeRoles };
