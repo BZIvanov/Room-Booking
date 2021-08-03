@@ -10,11 +10,18 @@ import {
   ELIGIBLE_REVIEWER_REQUEST,
   ELIGIBLE_REVIEWER_SUCCESS,
   ELIGIBLE_REVIEWER_FAIL,
+  ADMIN_ROOM_REQUEST,
+  ADMIN_ROOM_SUCCESS,
+  ADMIN_ROOM_FAIL,
   CLEAR_ERRORS,
 } from '../constants/rooms';
 
 export const rooms = (state = { rooms: [] }, action) => {
   switch (action.type) {
+    case ADMIN_ROOM_REQUEST:
+      return {
+        loading: true,
+      };
     case ALL_ROOMS_SUCCESS:
       return {
         totalCount: action.payload.totalCount,
@@ -22,7 +29,13 @@ export const rooms = (state = { rooms: [] }, action) => {
         perPage: action.payload.perPage,
         rooms: action.payload.rooms,
       };
+    case ADMIN_ROOM_SUCCESS:
+      return {
+        loading: false,
+        rooms: action.payload,
+      };
     case ALL_ROOMS_FAIL:
+    case ADMIN_ROOM_FAIL:
       return {
         error: action.payload,
       };

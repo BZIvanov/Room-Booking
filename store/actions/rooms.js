@@ -11,6 +11,9 @@ import {
   ELIGIBLE_REVIEWER_REQUEST,
   ELIGIBLE_REVIEWER_SUCCESS,
   ELIGIBLE_REVIEWER_FAIL,
+  ADMIN_ROOM_REQUEST,
+  ADMIN_ROOM_SUCCESS,
+  ADMIN_ROOM_FAIL,
   CLEAR_ERRORS,
 } from '../constants/rooms';
 
@@ -49,6 +52,23 @@ export const getRoom = (req, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ROOM_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getAdminRooms = () => async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_ROOM_REQUEST });
+
+    const { data } = await axios.get('/api/admin/rooms');
+    dispatch({
+      type: ADMIN_ROOM_SUCCESS,
+      payload: data.rooms,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_ROOM_FAIL,
       payload: error.response.data.message,
     });
   }

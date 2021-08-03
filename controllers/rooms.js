@@ -126,6 +126,12 @@ const eligibleReviewer = catchAsync(async (req, res) => {
   res.status(200).json({ success: true, isEligibleReviewer });
 });
 
+const allAdminRooms = catchAsync(async (req, res) => {
+  const rooms = await Room.find();
+
+  res.status(200).json({ success: true, rooms });
+});
+
 export {
   getAllRooms,
   getRoom,
@@ -134,4 +140,5 @@ export {
   deleteRoom,
   createReview,
   eligibleReviewer,
+  allAdminRooms,
 };
