@@ -7,6 +7,9 @@ import {
   CREATE_REVIEW_SUCCESS,
   CREATE_REVIEW_RESET,
   CREATE_REVIEW_FAIL,
+  ELIGIBLE_REVIEWER_REQUEST,
+  ELIGIBLE_REVIEWER_SUCCESS,
+  ELIGIBLE_REVIEWER_FAIL,
   CLEAR_ERRORS,
 } from '../constants/rooms';
 
@@ -69,6 +72,32 @@ export const createReview = (state = {}, action) => {
         success: false,
       };
     case CREATE_REVIEW_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const reviewEligible = (state = { eligible: null }, action) => {
+  switch (action.type) {
+    case ELIGIBLE_REVIEWER_REQUEST:
+      return {
+        loading: true,
+      };
+    case ELIGIBLE_REVIEWER_SUCCESS:
+      return {
+        loading: false,
+        eligible: action.payload,
+      };
+    case ELIGIBLE_REVIEWER_FAIL:
       return {
         loading: false,
         error: action.payload,

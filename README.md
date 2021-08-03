@@ -62,3 +62,5 @@ stripe listen --forward-to localhost:3000/api/webhook
 ```
 
 Now create new booking on the website and in the cmd you should be able to see triggered events.
+
+**Note** you can not create booking if you don't have the stripe CLI running.
