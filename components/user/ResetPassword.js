@@ -19,7 +19,7 @@ const ResetPassword = () => {
   useEffect(() => {
     if (error) {
       toast.error(error);
-      dispatch(clearErrors);
+      dispatch(clearErrors());
     }
 
     if (success) {

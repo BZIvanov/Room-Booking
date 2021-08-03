@@ -17,7 +17,7 @@ const Home = () => {
 
   useEffect(() => {
     toast.error(error);
-    dispatch(clearErrors);
+    dispatch(clearErrors());
   }, []);
 
   let { page = 1, location } = router.query;

@@ -41,7 +41,7 @@ const Profile = () => {
 
     if (error) {
       toast.error(error);
-      dispatch(clearErrors);
+      dispatch(clearErrors());
     }
 
     if (isUpdated) {
