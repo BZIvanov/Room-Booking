@@ -46,8 +46,6 @@ const createRoom = catchAsync(async (req, res) => {
   for (const image of images) {
     const img = await cloudinary.v2.uploader.upload(image, {
       folder: 'bookit/rooms',
-      width: '150',
-      crop: 'scale',
     });
 
     urls.push({
@@ -69,9 +67,28 @@ const createRoom = catchAsync(async (req, res) => {
 
 const updateRoom = catchAsync(async (req, res) => {
   let room = await Room.findById(req.query.id);
-
   if (!room) {
     return next(new AppError('Room not found', 404));
+  }
+
+  if (req.body.images) {
+    for (const image of room.images) {
+      await cloudinary.v2.uploader.destroy(image.publicId);
+    }
+
+    const imagesInfo = [];
+    for (const image of req.body.images) {
+      const img = await cloudinary.v2.uploader.upload(image, {
+        folder: 'bookit/rooms',
+      });
+
+      imagesInfo.push({
+        publicId: img.public_id,
+        url: img.secure_url,
+      });
+    }
+
+    req.body.images = imagesInfo;
   }
 
   room = await Room.findByIdAndUpdate(req.query.id, req.body, {
