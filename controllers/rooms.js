@@ -105,12 +105,15 @@ const updateRoom = catchAsync(async (req, res) => {
 
 const deleteRoom = catchAsync(async (req, res) => {
   const room = await Room.findById(req.query.id);
-
   if (!room) {
     return next(new AppError('Room not found', 404));
   }
 
-  await Room.remove();
+  for (const image of room.images) {
+    await cloudinary.v2.uploader.destroy(image.publicId);
+  }
+
+  await room.remove();
 
   res.status(200).json({ success: true });
 });
