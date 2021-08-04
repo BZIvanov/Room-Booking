@@ -10,6 +10,12 @@ import {
   MY_BOOKINGS_FAIL,
   BOOKING_SUCCESS,
   BOOKING_FAIL,
+  ALL_BOOKINGS_REQUEST,
+  ALL_BOOKINGS_SUCCESS,
+  ALL_BOOKINGS_FAIL,
+  REMOVE_BOOKING_REQUEST,
+  REMOVE_BOOKING_SUCCESS,
+  REMOVE_BOOKING_FAIL,
   CLEAR_ERRORS,
 } from '../constants/bookings';
 
@@ -73,6 +79,24 @@ export const getMyBookings = (authCookie, req) => async (dispatch) => {
   }
 };
 
+export const getAllBookings = () => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_BOOKINGS_REQUEST });
+
+    const { data } = await axios.get('/api/admin/bookings');
+
+    dispatch({
+      type: ALL_BOOKINGS_SUCCESS,
+      payload: data.bookings,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_BOOKINGS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 export const getBooking = (authCookie, req, id) => async (dispatch) => {
   try {
     const config = {
@@ -91,6 +115,24 @@ export const getBooking = (authCookie, req, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: BOOKING_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const removeBookingAction = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: REMOVE_BOOKING_REQUEST });
+
+    const { data } = await axios.delete(`/api/admin/bookings/${id}`);
+
+    dispatch({
+      type: REMOVE_BOOKING_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: REMOVE_BOOKING_FAIL,
       payload: error.response.data.message,
     });
   }

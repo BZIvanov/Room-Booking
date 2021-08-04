@@ -119,10 +119,32 @@ const getBooking = catchAsync(async (req, res) => {
   });
 });
 
+const getAllBookings = catchAsync(async (req, res) => {
+  const bookings = await Booking.find();
+
+  res.status(200).json({
+    success: true,
+    bookings,
+  });
+});
+
+const removeBooking = catchAsync(async (req, res, next) => {
+  const booking = await Booking.findById(req.query.id);
+  if (!booking) {
+    return next(new AppError('Booking not found', 404));
+  }
+
+  await booking.remove();
+
+  res.status(200).json({ success: true });
+});
+
 export {
   createBooking,
   checkRoomAvailability,
   checkRoomBookedDates,
   getMyBookings,
   getBooking,
+  getAllBookings,
+  removeBooking,
 };
