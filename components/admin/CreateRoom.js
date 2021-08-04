@@ -78,6 +78,10 @@ const CreateRoom = () => {
       images,
     };
 
+    if (images.length === 0) {
+      return toast.error('Please upload images');
+    }
+
     dispatch(createRoomAction(roomData));
   };
 
@@ -85,7 +89,6 @@ const CreateRoom = () => {
     <div className='container container-fluid'>
       <div className='row wrapper'>
         <div className='col-10 col-lg-8'>
-          {JSON.stringify(imagesPreview)}
           <form
             onSubmit={handleSubmit}
             className='shadow-lg'
@@ -110,7 +113,7 @@ const CreateRoom = () => {
                 id='price_field'
                 className='form-control'
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) => setPrice(+e.target.value)}
                 required
               />
             </div>
