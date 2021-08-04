@@ -1,9 +1,9 @@
 import React from 'react';
 import { getSession } from 'next-auth/client';
-import { wrapper } from '../../store';
-import { getBooking } from '../../store/actions/bookings';
-import Booking from '../../components/bookings/Booking';
-import Layout from '../../components/layout/Layout';
+import { wrapper } from '../../../store';
+import { getBooking } from '../../../store/actions/bookings';
+import Booking from '../../../components/bookings/Booking';
+import Layout from '../../../components/layout/Layout';
 
 const BookingPage = () => {
   return (
