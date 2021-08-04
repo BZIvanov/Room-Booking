@@ -120,7 +120,15 @@ const getBooking = catchAsync(async (req, res) => {
 });
 
 const getAllBookings = catchAsync(async (req, res) => {
-  const bookings = await Booking.find();
+  const bookings = await Booking.find()
+    .populate({
+      path: 'room',
+      select: 'name pricePerNight images',
+    })
+    .populate({
+      path: 'user',
+      select: 'name email',
+    });
 
   res.status(200).json({
     success: true,

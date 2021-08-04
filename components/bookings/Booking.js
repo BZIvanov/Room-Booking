@@ -9,6 +9,7 @@ const Booking = () => {
   const dispatch = useDispatch();
 
   const { booking, error } = useSelector((state) => state.booking);
+  const { user } = useSelector((state) => state.loadUser);
 
   useEffect(() => {
     if (error) {
@@ -16,6 +17,8 @@ const Booking = () => {
       dispatch(clearErrors());
     }
   }, [dispatch]);
+
+  const isPaid = booking.paymentInfo && booking.paymentInfo.status === 'paid';
 
   return (
     <div className='container'>
@@ -35,6 +38,7 @@ const Booking = () => {
                 <b>Amount:</b> {booking.amountPaid} lv.
               </p>
               <hr />
+
               <h4 className='mb-4'>Booking Info</h4>
               <p>
                 <b>Check In:</b>{' '}
@@ -48,12 +52,22 @@ const Booking = () => {
                 <b>Days of Stay:</b> {booking.daysOfStay}
               </p>
               <hr />
+
               <h4 className='my-4'>Payment Status</h4>
-              <p className='greenColor'>
-                <b>Paid</b>
+              <p className={isPaid ? 'greenColor' : 'redColor'}>
+                <b>{isPaid ? 'Paid' : 'Not Paid'}</b>
               </p>
-              <h4 className='mt-5 mb-4'>Booked Room:</h4>
+              {user && user.role === 'admin' && (
+                <>
+                  <h4 className='my-4'>Stripe Payment ID</h4>
+                  <p className='redColor'>
+                    <b>{booking.paymentInfo.id}</b>
+                  </p>
+                </>
+              )}
               <hr />
+
+              <h4 className='mt-5 mb-4'>Booked Room:</h4>
               <div className='cart-item my-1'>
                 <div className='row my-5'>
                   <div className='col-4 col-lg-2'>
