@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { auth, user, loadUser, forgotPassword } from './users';
+import { auth, user, loadUser, forgotPassword, allUsers } from './users';
 import {
   rooms,
   roomDetails,
@@ -32,6 +32,7 @@ const reducers = combineReducers({
   createRoom,
   updateRoom,
   removeBooking,
+  allUsers,
 });
 
 export default reducers;

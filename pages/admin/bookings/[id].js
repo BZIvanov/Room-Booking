@@ -17,7 +17,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, params }) => {
       const session = await getSession({ req });
-      if (!session) {
+      if (!session || session.user.role !== 'admin') {
         return {
           redirect: {
             destination: '/login',

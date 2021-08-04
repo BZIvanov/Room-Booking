@@ -1,12 +1,12 @@
 import React from 'react';
 import { getSession } from 'next-auth/client';
-import AllRooms from '../../../components/admin/AllRooms';
+import AllUsers from '../../../components/admin/AllUsers';
 import Layout from '../../../components/layout/Layout';
 
-const AllRoomsPage = () => {
+const AllUsersPage = () => {
   return (
-    <Layout title='All Rooms'>
-      <AllRooms />
+    <Layout title='All Users'>
+      <AllUsers />
     </Layout>
   );
 };
@@ -25,4 +25,4 @@ export async function getServerSideProps(context) {
   return { props: {} };
 }
 
-export default AllRoomsPage;
+export default AllUsersPage;
