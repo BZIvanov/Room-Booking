@@ -9,6 +9,13 @@ import {
   MY_BOOKINGS_FAIL,
   BOOKING_SUCCESS,
   BOOKING_FAIL,
+  ALL_BOOKINGS_REQUEST,
+  ALL_BOOKINGS_SUCCESS,
+  ALL_BOOKINGS_FAIL,
+  REMOVE_BOOKING_REQUEST,
+  REMOVE_BOOKING_SUCCESS,
+  REMOVE_BOOKING_RESET,
+  REMOVE_BOOKING_FAIL,
   CLEAR_ERRORS,
 } from '../constants/bookings';
 
@@ -67,12 +74,18 @@ export const bookedDates = (state = { dates: [] }, action) => {
 
 export const myBookings = (state = { bookings: [] }, action) => {
   switch (action.type) {
+    case ALL_BOOKINGS_REQUEST:
+      return {
+        loading: true,
+      };
     case MY_BOOKINGS_SUCCESS:
+    case ALL_BOOKINGS_SUCCESS:
       return {
         loading: false,
         bookings: action.payload,
       };
     case MY_BOOKINGS_FAIL:
+    case ALL_BOOKINGS_FAIL:
       return {
         loading: false,
         error: action.payload,
@@ -95,6 +108,37 @@ export const booking = (state = { booking: {} }, action) => {
         booking: action.payload,
       };
     case BOOKING_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const removeBooking = (state = {}, action) => {
+  switch (action.type) {
+    case REMOVE_BOOKING_REQUEST:
+      return {
+        loading: true,
+      };
+    case REMOVE_BOOKING_SUCCESS:
+      return {
+        loading: false,
+        isDeleted: action.payload,
+      };
+    case REMOVE_BOOKING_RESET:
+      return {
+        loading: false,
+        isDeleted: false,
+      };
+    case REMOVE_BOOKING_FAIL:
       return {
         loading: false,
         error: action.payload,

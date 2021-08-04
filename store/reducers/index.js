@@ -8,7 +8,13 @@ import {
   createRoom,
   updateRoom,
 } from './rooms';
-import { checkBooking, bookedDates, myBookings, booking } from './bookings';
+import {
+  checkBooking,
+  bookedDates,
+  myBookings,
+  booking,
+  removeBooking,
+} from './bookings';
 
 const reducers = combineReducers({
   auth,
@@ -25,6 +31,7 @@ const reducers = combineReducers({
   reviewEligible,
   createRoom,
   updateRoom,
+  removeBooking,
 });
 
 export default reducers;
