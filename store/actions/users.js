@@ -18,6 +18,15 @@ import {
   ALL_USERS_REQUEST,
   ALL_USERS_SUCCESS,
   ALL_USERS_FAIL,
+  USER_REQUEST,
+  USER_SUCCESS,
+  USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
+  REMOVE_USER_REQUEST,
+  REMOVE_USER_SUCCESS,
+  REMOVE_USER_FAIL,
   CLEAR_ERRORS,
 } from '../constants/users';
 
@@ -151,6 +160,70 @@ export const getAllUsersAction = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ALL_USERS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getUserAction = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_REQUEST });
+
+    const { data } = await axios.get(`/api/admin/users/${id}`);
+
+    dispatch({
+      type: USER_SUCCESS,
+      payload: data.user,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const adminUpdateUserAction = (id, userData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_REQUEST });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/admin/users/${id}`,
+      userData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const removeUserAction = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: REMOVE_USER_REQUEST });
+
+    const { data } = await axios.delete(`/api/admin/users/${id}`);
+
+    dispatch({
+      type: REMOVE_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: REMOVE_USER_FAIL,
       payload: error.response.data.message,
     });
   }
