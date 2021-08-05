@@ -14,6 +14,8 @@ import {
   reviewEligible,
   createRoom,
   updateRoom,
+  roomReviews,
+  removeReview,
 } from './rooms';
 import {
   checkBooking,
@@ -41,6 +43,8 @@ const reducers = combineReducers({
   removeBooking,
   allUsers,
   updateUser,
+  roomReviews,
+  removeReview,
 });
 
 export default reducers;
