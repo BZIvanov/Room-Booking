@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { Schema, models, model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
+import { USER_ROLES } from '../constants';
 
 const schema = new Schema(
   {
@@ -28,8 +29,8 @@ const schema = new Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
+      enum: USER_ROLES,
+      default: USER_ROLES[0],
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,

@@ -4,7 +4,12 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { MDBDataTable } from 'mdbreact';
 import { toast } from 'react-toastify';
-import { getAllUsersAction, clearErrors } from '../../store/actions/users';
+import {
+  getAllUsersAction,
+  removeUserAction,
+  clearErrors,
+} from '../../store/actions/users';
+import { REMOVE_USER_RESET } from '../../store/constants/users';
 import Loader from '../layout/Loader';
 
 const AllUsers = () => {
@@ -12,6 +17,7 @@ const AllUsers = () => {
   const dispatch = useDispatch();
 
   const { loading, users, error } = useSelector((state) => state.allUsers);
+  const { isDeleted, error: removeError } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getAllUsersAction());
@@ -20,7 +26,17 @@ const AllUsers = () => {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+
+    if (removeError) {
+      toast.error(removeError);
+      dispatch(clearErrors());
+    }
+
+    if (isDeleted) {
+      router.push('/admin/users');
+      dispatch({ type: REMOVE_USER_RESET });
+    }
+  }, [dispatch, isDeleted, error, removeError]);
 
   const setUsers = () => {
     const data = {
@@ -70,7 +86,7 @@ const AllUsers = () => {
               </Link>
               <button
                 className='btn btn-danger mx-2'
-                onClick={() => handleDelete(user._id)}
+                onClick={() => handleRemove(user._id)}
               >
                 <i className='fa fa-trash'></i>
               </button>
@@ -82,8 +98,8 @@ const AllUsers = () => {
     return data;
   };
 
-  const handleDelete = (id) => {
-    // dispatch(deleteRoomAction(id));
+  const handleRemove = (id) => {
+    dispatch(removeUserAction(id));
   };
 
   return (

@@ -18,6 +18,17 @@ import {
   ALL_USERS_REQUEST,
   ALL_USERS_SUCCESS,
   ALL_USERS_FAIL,
+  USER_REQUEST,
+  USER_SUCCESS,
+  USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_RESET,
+  UPDATE_USER_FAIL,
+  REMOVE_USER_REQUEST,
+  REMOVE_USER_SUCCESS,
+  REMOVE_USER_RESET,
+  REMOVE_USER_FAIL,
   CLEAR_ERRORS,
 } from '../constants/users';
 
@@ -79,20 +90,36 @@ export const loadUser = (state = { loading: true, user: null }, action) => {
 export const user = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_PROFILE_REQUEST:
+    case UPDATE_USER_REQUEST:
+    case REMOVE_USER_REQUEST:
       return {
         loading: true,
       };
     case UPDATE_PROFILE_SUCCESS:
+    case UPDATE_USER_SUCCESS:
       return {
         loading: false,
         isUpdated: action.payload,
       };
+    case REMOVE_USER_SUCCESS:
+      return {
+        loading: false,
+        isDeleted: action.payload,
+      };
     case UPDATE_PROFILE_RESET:
+    case UPDATE_USER_RESET:
+      return {
+        loading: false,
+        isUpdated: false,
+      };
+    case REMOVE_USER_RESET:
       return {
         loading: false,
         isUpdated: false,
       };
     case UPDATE_PROFILE_FAIL:
+    case UPDATE_USER_FAIL:
+    case REMOVE_USER_FAIL:
       return {
         loading: false,
         error: action.payload,
@@ -152,6 +179,33 @@ export const allUsers = (state = { users: [] }, action) => {
         users: action.payload,
       };
     case ALL_USERS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const updateUser = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case USER_SUCCESS:
+      return {
+        loading: false,
+        user: action.payload,
+      };
+    case USER_FAIL:
       return {
         loading: false,
         error: action.payload,
