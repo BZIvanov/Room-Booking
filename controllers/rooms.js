@@ -55,7 +55,7 @@ const createRoom = catchAsync(async (req, res) => {
   }
 
   req.body.images = urls;
-  req.body.user = req.user._id;
+  req.body.roomCreator = req.user._id;
 
   const room = await Room.create(req.body);
 
@@ -173,6 +173,41 @@ const allAdminRooms = catchAsync(async (req, res) => {
   res.status(200).json({ success: true, rooms });
 });
 
+const roomReviews = catchAsync(async (req, res) => {
+  const room = await Room.findById(req.query.id);
+
+  res.status(200).json({ success: true, reviews: room.reviews });
+});
+
+const removeReview = catchAsync(async (req, res) => {
+  const room = await Room.findById(req.query.roomId);
+
+  const reviews = room.reviews.filter(
+    (review) => review._id.toString() !== req.query.id
+  );
+
+  const rating =
+    reviews.length > 0
+      ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
+      : 0;
+
+  await Room.findByIdAndUpdate(
+    req.query.roomId,
+    {
+      reviews,
+      rating,
+      reviewsNumber: reviews.length,
+    },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({ success: true });
+});
+
 export {
   getAllRooms,
   getRoom,
@@ -182,4 +217,6 @@ export {
   createReview,
   eligibleReviewer,
   allAdminRooms,
+  roomReviews,
+  removeReview,
 };
