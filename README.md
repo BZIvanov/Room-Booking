@@ -1,70 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Learning Linux
 
-## Getting Started
+This repo contains learning materials for linux.
 
-First, run the development server:
+## About Linux
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Linux is an open-source, Unix-like operating system kernel that serves as the foundation for various distributions (distros) such as Ubuntu, Fedora, and Debian. It is known for its stability, security, and flexibility, making it widely used in servers, embedded systems, and personal computers. Linux supports multi-user environments, offers powerful command-line tools, and is highly customizable. It is maintained by a global community of developers and is available for free under the GNU General Public License (GPL).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## GNU, Kernel and Linux
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- **Linux**: A free and open-source operating system kernel developed by **Linus Torvalds** in 1991. It serves as the core of many operating systems.
+- **Kernel**: The central part of an operating system that manages hardware and system resources. Linux is a type of kernel.
+- **GNU**: A free software project started by **Richard Stallman** in 1983 to create a Unix-like operating system. Many GNU tools and utilities are used alongside the Linux kernel to form a complete operating system, often called GNU/Linux.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+In short, **Linux (the kernel) + GNU tools = a functional operating system (GNU/Linux)**.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Shell
 
-## Learn More
+A shell is a command-line interface (CLI) that allows users to interact with the operating system by executing commands. It acts as a bridge between the user and the system’s kernel.
 
-To learn more about Next.js, take a look at the following resources:
+### Types of Shells
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+There are several types of shells in Linux, including:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Bash (Bourne Again Shell)** – The most common and default shell in many Linux distributions.
+- **Sh (Bourne Shell)** – The original Unix shell, simpler than Bash.
+- **Zsh (Z Shell)** – An advanced shell with powerful features like auto-completion and plugins.
+- **Fish (Friendly Interactive Shell)** – A user-friendly shell with syntax highlighting and suggestions.
+- **Csh (C Shell)** – A shell with a C-like syntax, commonly used in scripting.
+- **Tcsh** – An improved version of Csh, adding more features.
 
-## Deploy on Vercel
+## Terminal
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+A terminal is an application that provides access to the shell. It allows users to enter commands and see their output. Examples include:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **GNOME Terminal** (for GNOME desktops)
+- **Konsole** (for KDE desktops)
+- **xterm**
+- **Alacritty**
+- **Terminator**
 
-## Cloudinary
+In short, the **terminal** is the interface, and the **shell** is the program that processes commands within it.
 
-To get your credentials (for the next.config file) for using cloudinary you need to register your account and you can find you credentials in the Dashboard.
+## Content
 
-## Mailtrap
+Recommended learning order for the materials in this repository:
 
-To use the nodemailer package you need to register Mailtrap account.
-
-After account is created go to your Project then your Inbox. From the Integrations dropdown select Node.js Nodemailer. And you will be able to see your credentials.
-
-## Stripe
-
-Register your stripe account to get your credentials. You can find them on your dashboard.
-
-To use the stripe checkout you need to provide company or business name. If you have not created one you can do so by clicking New Business top-left on your stripe dashboard.
-
-#### Stripe webhooks
-
-To work with the webhooks download the Stripe CLI to be able to run commands from the terminal. Stripe CLI is a way to test webhooks locally, for production setup you will need to create endpoint in the webhooks section in the dashboard.
-
-To download and install the CLI follow the instructions from the documentation.
-
-Whereever (folder) you unziped the stripe.exe file, open cmd in that directory and run the below command:
-
-```bash
-stripe listen --forward-to localhost:3000/api/webhook
-```
-
-Now create new booking on the website and in the cmd you should be able to see triggered events.
-
-**Note** you can not create booking if you don't have the stripe CLI running.
-
-## TODO
-
-Refactor the store entirely...
+1. GettingStarted
