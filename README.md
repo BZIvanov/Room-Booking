@@ -46,3 +46,6 @@ In short, the **terminal** is the interface, and the **shell** is the program th
 Recommended learning order for the materials in this repository:
 
 1. GettingStarted
+2. Navigation
+3. CreatingFilesAndDirectories
+4. Nano
