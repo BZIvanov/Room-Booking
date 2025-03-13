@@ -49,3 +49,4 @@ Recommended learning order for the materials in this repository:
 2. Navigation
 3. CreatingFilesAndDirectories
 4. Nano
+5. CopyingMovingDeleting
