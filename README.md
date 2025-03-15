@@ -53,3 +53,4 @@ Recommended learning order for the materials in this repository:
 6. WorkingWithFiles
 7. Redirection
 8. Piping
+9. ShellExpansionAndWildcards
