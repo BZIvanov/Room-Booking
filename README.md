@@ -50,3 +50,6 @@ Recommended learning order for the materials in this repository:
 3. CreatingFilesAndDirectories
 4. Nano
 5. CopyingMovingDeleting
+6. WorkingWithFiles
+7. Redirection
+8. Piping
